@@ -1,7 +1,7 @@
 <resources>
     <string name="app_name">Dojo Tasks</string>
     <string name="tasks_title">Tasks</string>
-    <string name="remaining_count">%1$d remaining</string>
+    <string name="remaining_count">%1$d left to do</string>
     <string name="empty_tasks">No tasks yet. Tap + to add one.</string>
     <string name="add_task">Add task</string>
     <string name="edit_task">Edit task</string>
