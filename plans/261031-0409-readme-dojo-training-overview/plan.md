@@ -1,7 +1,7 @@
 ---
 title: "Update README for Dojo 15-day training"
 description: "Rewrite the two-line README into an entry point for the solo Dojo training repo."
-status: in-progress
+status: completed
 priority: P2
 effort: "30m"
 tags: ["docs", "readme", "dojo"]
@@ -33,7 +33,7 @@ App build/run instructions are out of scope until the Android app exists. Day 0 
 
 | # | Phase | Status |
 |---|-------|--------|
-| 1 | [Phase 1: Rewrite README](./phase-01-rewrite-readme.md) | In Progress |
+| 1 | [Phase 1: Rewrite README](./phase-01-rewrite-readme.md) | Done |
 
 ## Success Criteria
 

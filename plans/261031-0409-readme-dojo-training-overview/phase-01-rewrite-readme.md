@@ -1,6 +1,6 @@
 ---
 title: "Phase 1: Rewrite README"
-status: in-progress
+status: done
 ---
 
 # Phase 1: Rewrite README
@@ -33,8 +33,8 @@ Replace the two-line `README.md` with a concise entry point for the training rep
 
 - [x] Draft README sections 1–7
 - [x] Check every relative link exists (`ls` each target)
-- [ ] Preview the rendered markdown (for example `gh markdown-preview`, or view after pushing)
-- [ ] Commit on a branch and open a PR (this doubles as Git block practice)
+- [x] Preview the rendered markdown (for example `gh markdown-preview`, or view after pushing)
+- [x] Commit on a branch and open a PR (this doubles as Git block practice): PR #1
 
 ## Success Criteria
 
