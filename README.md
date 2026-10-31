@@ -21,7 +21,25 @@ Each day is one phase file. Its tasks, deliverables and checkpoint criteria are 
 
 ## Training app
 
-A small Android app (Kotlin, Jetpack Compose, Gradle, GitHub Actions CI) is the target for every exercise. It gets built on Day 0 ([phase file](plans/261031-0357-dojo-w1-shared-fundamentals/phase-01-day-00-training-app-scaffold.md)), and the build and run instructions will be added here then.
+**Dojo Tasks** is a small Android to-do app (Kotlin, Jetpack Compose, Material 3) and the target for every exercise. It has a task list, a task detail screen and an add/edit form. Data lives in memory and resets when the app restarts. It was set up on Day 0 ([phase file](plans/261031-0357-dojo-w1-shared-fundamentals/phase-01-day-00-training-app-scaffold.md)).
+
+Requirements: JDK 17+ and the Android SDK with platform 37. Android Studio sets both up. The Gradle project lives in `android-app/`; open that folder in Android Studio. Create `android-app/local.properties` with `sdk.dir=/path/to/Android/sdk` if Android Studio hasn't.
+
+```bash
+cd android-app
+./gradlew testDebugUnitTest      # unit tests
+./gradlew lintDebug              # Android lint
+./gradlew assembleDebug          # debug APK in app/build/outputs/apk/debug/
+./gradlew installDebug           # install on a running emulator or device
+```
+
+Code layout under `android-app/app/src/main/java/com/dojo/tasks/`:
+
+- `data/` holds the `Task` model and `TaskRepository` (in-memory).
+- `domain/TaskRules.kt` holds pure business rules: overdue, title validation, sorting.
+- `ui/` holds `TasksViewModel` (state and navigation) and the three Compose screens.
+
+CI (`.github/workflows/android-ci.yml`) runs the unit tests, lint and a debug build on every PR and on pushes to `main`.
 
 ## Tracking progress
 
@@ -40,7 +58,8 @@ ak plan reindex --apply                        # re-sync after editing plan file
 .
 ├── plans/           # training plans (one per stage) and this repo's other plans
 │   └── reports/     # exercise notes, screenshots, review write-ups
-├── app/             # Android training app (from Day 0)
+├── android-app/     # Android training app (Dojo Tasks), Gradle project root
+├── .github/         # CI workflow
 └── .claude/         # team skills, commands and hooks (from Days 7–9)
 ```
 
