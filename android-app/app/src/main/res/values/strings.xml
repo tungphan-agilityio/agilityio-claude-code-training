@@ -1,0 +1,25 @@
+<resources>
+    <string name="app_name">Dojo Tasks</string>
+    <string name="tasks_title">Tasks</string>
+    <string name="remaining_count">%1$d remaining</string>
+    <string name="empty_tasks">No tasks yet. Tap + to add one.</string>
+    <string name="add_task">Add task</string>
+    <string name="edit_task">Edit task</string>
+    <string name="new_task">New task</string>
+    <string name="title_label">Title</string>
+    <string name="notes_label">Notes</string>
+    <string name="due_label">Due date (yyyy-mm-dd, optional)</string>
+    <string name="save">Save</string>
+    <string name="cancel">Cancel</string>
+    <string name="edit">Edit</string>
+    <string name="delete">Delete</string>
+    <string name="back">Back</string>
+    <string name="mark_done">Mark done</string>
+    <string name="mark_not_done">Mark not done</string>
+    <string name="overdue">Overdue</string>
+    <string name="due_on">Due %1$s</string>
+    <string name="no_due_date">No due date</string>
+    <string name="error_title_required">Title is required</string>
+    <string name="error_title_too_long">Title must be 80 characters or fewer</string>
+    <string name="error_bad_date">Use the format yyyy-mm-dd</string>
+</resources>
