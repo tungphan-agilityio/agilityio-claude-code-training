@@ -38,12 +38,59 @@ Keep it under 150 words. Don't invent facts that aren't in the report; mark assu
 Report: "I was looking at my list this morning and a task showed up in red as Overdue, but I'm pretty sure I'm not late on it yet. Kind of stressful! Using the app on my Pixel."
 ```
 
+<details>
+<summary>v1 answer (verbatim)</summary>
+
+```text
+Bug summary: A task shows as "Overdue" (in red) before its due date.
+
+Platform: Android (Google Pixel)
+When seen: Morning, on the task list view
+Expected: The task shows as upcoming or due, not overdue, until its due date/time has passed.
+Actual: The task is flagged red as Overdue too early.
+Impact: It worries users ("kind of stressful"), and it makes the Overdue status less trustworthy.
+Severity: Medium. It's a display/logic error with no data loss, but it hurts user trust.
+Missing info: the task's actual due date/time, the device's timezone, app version, Android version, and whether the task was all-day or had a set time.
+
+Likely causes to check: a timezone or UTC conversion problem, where the due date is stored in UTC but compared against local time (a morning report fits this). Another possibility is an all-day task being treated as due at 00:00 instead of end of day, or an off-by-one in a < vs <= date comparison.
+```
+
+</details>
+
+<details>
+<summary>v2 answer (verbatim)</summary>
+
+```text
+Title: Task shown as Overdue (red) before its due date has passed, Pixel
+
+Observed vs. expected
+
+Observed: In the morning, a task appeared in red with an "Overdue" label.
+Expected: The task shouldn't be overdue. The user believes the due date hasn't passed, but isn't certain ("pretty sure").
+
+Missing info
+
+The task's due date, and whether it's date-only or has a time
+Device date, time and timezone when this happened
+Pixel model, Android version and app version
+Any recent travel or timezone change
+Screenshot
+
+Hypotheses (most to least likely)
+
+Assumption: A date-only due date is treated as midnight at the start of that day. A task due today would then turn red in the morning instead of after the day ends.
+A UTC/local timezone conversion moves the due date one day earlier.
+The device clock or timezone is wrong, or the due date isn't what the user remembers.
+```
+
+</details>
+
 | | Notes |
 |---|---|
-| v1 answer, in one line | |
-| v2 answer, in one line | |
+| v1 answer, in one line | Generic bug-ticket template, with severity, impact and a list of causes; it states "before its due date" as a fact. |
+| v2 answer, in one line | Tighter teammate summary; keeps the user's uncertainty ("pretty sure") and gives ranked hypotheses with the assumption labelled. |
 | Which prompt change helped most | |
-| Discernment: did it invent anything? | |
+| Discernment: did it invent anything? | v1 added a severity rating ("Medium"), ticket fields and a cause ranking that the report doesn't support, and it took "not late yet" as confirmed. v2 kept to the report and labelled its assumption, though "Pixel" in the title is the only device detail given. |
 | Surprise (good or bad) | |
 
 ---
