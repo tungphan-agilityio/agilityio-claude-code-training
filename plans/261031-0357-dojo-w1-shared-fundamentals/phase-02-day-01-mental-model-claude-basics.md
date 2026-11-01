@@ -19,12 +19,13 @@ Source: [day-01.html](https://dojo.agilityio.dev/schedule/day-01.html)
 - [x] Course: [AI capabilities and limitations](https://academy.claude.com/courses/ai-capabilities-and-limitations). It builds an accurate mental model of LLMs (next-token prediction, knowledge, working memory, steerability, context limits) and explains why verification beats trust. Listed for Everyone on Day 1 in the [course catalog](https://dojo.agilityio.dev/courses.html), though not on the Day 1 schedule page. Quiz passed; [badge](https://academy.claude.com/verify/bad2d2ee6ccdb5492dc0a0c8e2dedeb9).
 - [x] Lesson-by-lesson summary of the AI capabilities and limitations course, from the video transcripts: [course-summary-261101-0955-ai-capabilities-and-limitations.md](../reports/course-summary-261101-0955-ai-capabilities-and-limitations.md)
 - [ ] Course: start [Claude 101](https://academy.claude.com/courses/claude-101) (first conversation, prompting basics), continue into projects/artifacts. Day 1 covers lessons 1–6; Day 2 finishes the course.
-  - [ ] 1. [What is Claude?](https://academy.claude.com/courses/claude-101/what-is-claude)
-  - [ ] 2. [Your first conversation with Claude](https://academy.claude.com/courses/claude-101/your-first-conversation-with-claude)
-  - [ ] 3. [Getting better results](https://academy.claude.com/courses/claude-101/getting-better-results)
+  - [x] 1. [What is Claude?](https://academy.claude.com/courses/claude-101/what-is-claude)
+  - [x] 2. [Your first conversation with Claude](https://academy.claude.com/courses/claude-101/your-first-conversation-with-claude)
+  - [x] 3. [Getting better results](https://academy.claude.com/courses/claude-101/getting-better-results)
   - [ ] 4. [Claude desktop app: chat, Cowork, Code](https://academy.claude.com/courses/claude-101/claude-desktop-app-chat-cowork-code)
   - [ ] 5. [Introduction to projects](https://academy.claude.com/courses/claude-101/introduction-to-projects)
   - [ ] 6. [Creating with artifacts](https://academy.claude.com/courses/claude-101/creating-with-artifacts)
+- Practice sheet for lessons 1–6 (prompts and notes tables): [exercise-261101-2146-claude-101-lessons-1-6-practice.md](../reports/exercise-261101-2146-claude-101-lessons-1-6-practice.md)
 - [x] Lesson-by-lesson summary of Claude 101 (all 13 lessons), from the lesson pages: [course-summary-261101-2107-claude-101.md](../reports/course-summary-261101-2107-claude-101.md)
 - [x] Git block: clone, branch, commit, push (done via PR #11)
 
