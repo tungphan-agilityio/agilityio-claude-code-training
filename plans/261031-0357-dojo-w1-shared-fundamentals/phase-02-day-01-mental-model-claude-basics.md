@@ -18,7 +18,13 @@ Source: [day-01.html](https://dojo.agilityio.dev/schedule/day-01.html)
 - [x] Lesson-by-lesson summary of the AI Fluency course, from the video transcripts: [course-summary-261031-1250-ai-fluency-framework-foundations.md](../reports/course-summary-261031-1250-ai-fluency-framework-foundations.md)
 - [x] Course: [AI capabilities and limitations](https://academy.claude.com/courses/ai-capabilities-and-limitations). It builds an accurate mental model of LLMs (next-token prediction, knowledge, working memory, steerability, context limits) and explains why verification beats trust. Listed for Everyone on Day 1 in the [course catalog](https://dojo.agilityio.dev/courses.html), though not on the Day 1 schedule page. Quiz passed; [badge](https://academy.claude.com/verify/bad2d2ee6ccdb5492dc0a0c8e2dedeb9).
 - [x] Lesson-by-lesson summary of the AI capabilities and limitations course, from the video transcripts: [course-summary-261101-0955-ai-capabilities-and-limitations.md](../reports/course-summary-261101-0955-ai-capabilities-and-limitations.md)
-- [ ] Course: start Claude 101 (first conversation, prompting basics), continue into projects/artifacts
+- [ ] Course: start [Claude 101](https://academy.claude.com/courses/claude-101) (first conversation, prompting basics), continue into projects/artifacts. Day 1 covers lessons 1–6; Day 2 finishes the course.
+  - [ ] 1. [What is Claude?](https://academy.claude.com/courses/claude-101/what-is-claude)
+  - [ ] 2. [Your first conversation with Claude](https://academy.claude.com/courses/claude-101/your-first-conversation-with-claude)
+  - [ ] 3. [Getting better results](https://academy.claude.com/courses/claude-101/getting-better-results)
+  - [ ] 4. [Claude desktop app: chat, Cowork, Code](https://academy.claude.com/courses/claude-101/claude-desktop-app-chat-cowork-code)
+  - [ ] 5. [Introduction to projects](https://academy.claude.com/courses/claude-101/introduction-to-projects)
+  - [ ] 6. [Creating with artifacts](https://academy.claude.com/courses/claude-101/creating-with-artifacts)
 - [x] Git block: clone, branch, commit, push (done via PR #11)
 
 ## Exercise
