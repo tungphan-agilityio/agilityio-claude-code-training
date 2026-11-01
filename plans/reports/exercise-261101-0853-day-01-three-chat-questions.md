@@ -116,12 +116,165 @@ If something depends on the Compose version, say so.
 
 When you get the answer, check one claim against the [Compose state docs](https://developer.android.com/develop/ui/compose/state). You can also compare it with `android-app/app/src/main/java/com/dojo/tasks/ui/TaskFormScreen.kt`.
 
+<details>
+<summary>v1 answer (verbatim)</summary>
+
+````text
+State hoisting in Compose means moving state out of a composable and into its caller. The composable becomes **stateless**: it receives the current value as a parameter and reports changes through a callback, usually `value: T` plus `onValueChange: (T) -> Unit`.
+
+**Before (stateful):**
+
+```kotlin
+@Composable
+fun TaskTitleField() {
+    var title by remember { mutableStateOf("") }
+    TextField(value = title, onValueChange = { title = it })
+}
+```
+
+The parent can't read `title`, reset it, or validate it.
+
+**After (hoisted):**
+
+```kotlin
+@Composable
+fun TaskTitleField(title: String, onTitleChange: (String) -> Unit) {
+    TextField(value = title, onValueChange = onTitleChange)
+}
+
+@Composable
+fun AddTaskScreen() {
+    var title by remember { mutableStateOf("") }
+    TaskTitleField(title = title, onTitleChange = { title = it })
+    Button(onClick = { /* save */ }, enabled = title.isNotBlank()) { Text("Add") }
+}
+```
+
+This gives you unidirectional data flow: state goes down, events go up.
+
+**Why it's worth doing:**
+- **One source of truth.** The state lives in one place, so siblings like the Add button can read the same value.
+- **Reusability.** A stateless composable works anywhere, with any state holder.
+- **Testability and previews.** You can render it with any value and no setup.
+- **Interception.** The parent can validate, transform, or reject changes before applying them.
+
+**Where to hoist it:** to the lowest common ancestor of every composable that reads or writes the state. Don't go higher than that. UI-only state, like whether a dropdown is expanded, can stay local. Screen and business state usually ends up in a `ViewModel` that exposes a `StateFlow`, collected with `collectAsStateWithLifecycle()`.
+
+A common pattern is to offer both versions: a stateful wrapper for convenience that delegates to a stateless overload. That's how many Material components are built.
+````
+
+</details>
+
+<details>
+<summary>v2 answer (verbatim)</summary>
+
+````text
+## The idea in plain English
+
+State hoisting means moving a composable's state *out* of it and up to its caller, so the composable only receives the current value and a callback to request changes. The composable becomes "stateless" (it displays what it's given and reports events), while a single owner higher up decides what the state actually is.
+
+If you're coming from Views: an `EditText` owns its text internally, and you read it with `getText()` or listen with a `TextWatcher`. In Compose, the hoisted version is closer to a fully controlled widget. It has no text of its own. It draws whatever string you pass in and tells you when the user tried to change it.
+
+## Before and after
+
+**Before: the composable owns its state**
+
+```kotlin
+@Composable
+fun TaskTitleField() {
+    var title by remember { mutableStateOf("") }
+    OutlinedTextField(
+        value = title,
+        onValueChange = { title = it },
+        label = { Text("Task title") }
+    )
+}
+```
+
+This works, but nobody outside can read `title`, validate it, reset it, or save it. It's also hard to preview or test with a specific value.
+
+**After: state hoisted to the caller**
+
+```kotlin
+@Composable
+fun TaskTitleField(
+    title: String,
+    onTitleChange: (String) -> Unit,
+    modifier: Modifier = Modifier
+) {
+    OutlinedTextField(
+        value = title,
+        onValueChange = onTitleChange,
+        label = { Text("Task title") },
+        modifier = modifier
+    )
+}
+
+@Composable
+fun AddTaskScreen() {
+    var title by rememberSaveable { mutableStateOf("") }
+    Column {
+        TaskTitleField(title = title, onTitleChange = { title = it })
+        Button(onClick = { /* save title */ }, enabled = title.isNotBlank()) {
+            Text("Add")
+        }
+    }
+}
+```
+
+Now the screen owns `title`, so it can enable the button, clear the field after saving, and so on. `TaskTitleField` is reusable and trivially previewable. The pattern is often summarized as "state flows down, events flow up."
+
+## Where a ViewModel with StateFlow fits
+
+Hoisting is a ladder, and the rule is to hoist state to the *lowest common owner that needs it*. Purely visual state (is a dropdown expanded?) can stay in the composable. State that the screen needs goes to the screen composable. State that involves business logic, survives configuration changes, or comes from a repository or database goes up to a ViewModel.
+
+At the ViewModel level, the screen-level composable collects the flow and passes plain values down:
+
+```kotlin
+data class TasksUiState(val tasks: List<Task> = emptyList(), val isLoading: Boolean = false)
+
+class TasksViewModel(private val repo: TaskRepository) : ViewModel() {
+    val uiState: StateFlow<TasksUiState> = repo.observeTasks()
+        .map { TasksUiState(tasks = it) }
+        .stateIn(viewModelScope, SharingStarted.WhileSubscribed(5_000), TasksUiState(isLoading = true))
+
+    fun onTaskChecked(id: Long, done: Boolean) {
+        viewModelScope.launch { repo.setDone(id, done) }
+    }
+}
+
+@Composable
+fun TasksRoute(viewModel: TasksViewModel = viewModel()) {
+    val state by viewModel.uiState.collectAsStateWithLifecycle()
+    TasksScreen(state = state, onTaskChecked = viewModel::onTaskChecked)
+}
+```
+
+The usual split is a thin "route" composable that knows about the ViewModel, and a `TasksScreen` beneath it that takes only plain values and lambdas. That keeps everything below the route previewable and testable without a ViewModel.
+
+Version notes:
+
+- `collectAsStateWithLifecycle()` comes from `androidx.lifecycle:lifecycle-runtime-compose` (2.6.0+). It stops collecting when the lifecycle drops below STARTED. Plain `collectAsState()` works everywhere but keeps collecting in the background.
+- Text input is changing. Compose Foundation 1.7 introduced the state-based `BasicTextField(state = TextFieldState)` API, and Material 3 `TextField` overloads using it arrived later. With that API you hoist a `TextFieldState` object (e.g. `rememberTextFieldState()`, or one held in the ViewModel) instead of a `value`/`onValueChange` pair. The value/callback version shown above is still supported and is what most existing code and tutorials use.
+
+## Three common mistakes
+
+1. **Backing a text field with a StateFlow that updates asynchronously.** If `onValueChange` goes through a coroutine, a `debounce`, or a `combine` before the new text comes back, the field can momentarily render stale text. Users then see the cursor jump or lose typed characters. Text field state must update synchronously. Either keep it in a `mutableStateOf` (in the composable or the ViewModel), or use `TextFieldState` on newer Compose versions. Derive other flows from it, rather than round-tripping keystrokes through a flow.
+
+2. **Hoisting too high, or not high enough.** Pushing every bit of UI state into the ViewModel bloats it and couples it to visual details, like whether a menu is open. Leaving shared state buried in a child forces awkward workarounds when a sibling needs it. Ask yourself who actually reads or changes this value, and put it at their lowest common ancestor.
+
+3. **Passing the ViewModel (or a MutableStateFlow) down the tree.** Handing `viewModel` to deep children makes them unpreviewable and lets any child mutate anything. Pass immutable values and specific lambdas like `onTaskChecked` instead. A related slip is using `remember` where `rememberSaveable` is needed. Plain `remember` loses its value on rotation and process death, which `EditText` users don't expect, because Views saved their text automatically.
+````
+
+</details>
+
 | | Notes |
 |---|---|
-| v1 answer, in one line | |
-| v2 answer, in one line | |
+| v1 answer, in one line | Correct, compact definition with a before/after example and the "lowest common ancestor" rule; uses `remember`, no version notes. |
+| v2 answer, in one line | Same core idea, framed for a Views developer (`EditText` comparison), plus a route/screen ViewModel pattern, version notes and three mistakes; switches to `rememberSaveable`. |
 | Which prompt change helped most | |
 | Claim verified against the docs, and the result | |
+| Compared with the Dojo Tasks code | The app matches the v2 pattern. `TaskFormScreen` keeps its fields in `rememberSaveable { mutableStateOf(...) }` at screen level, `TasksViewModel` exposes `StateFlow`s, and `MainActivity` acts as the route that calls `collectAsStateWithLifecycle()`. |
 | Surprise (good or bad) | |
 
 ---
