@@ -300,10 +300,44 @@ Facts to include, and nothing else:
 Format: 3 bullets (Done / Next / Blockers), plain and direct, no hype, under 80 words. Blockers: none.
 ```
 
+<details>
+<summary>v1 answer (verbatim)</summary>
+
+```text
+Happy to write it. What training is this, and what have you done so far? For example, a Compose course you're working through, a certification, or something else, plus who the update is for.
+
+In the meantime, here's a skeleton I can fill in once I have the details:
+
+**Training status update – [name of training]**
+
+**Progress:** Completed [X of Y modules / weeks], covering [main topics]. On track for [target date], or [behind/ahead by N weeks].
+
+**Applied so far:** Used [skill or concept] in [project or task], which [result].
+
+**Next up:** [Upcoming modules or topics] over the next [timeframe].
+
+**Blockers / needs:** [Anything you need, such as time, access, or a reviewer], or "None at the moment."
+```
+
+</details>
+
+<details>
+<summary>v2 answer (verbatim)</summary>
+
+```text
+**Claude Code training (15-day program, solo, Android track)**
+
+- **Done:** Day 0 is complete. I built the "Dojo Tasks" training app (Kotlin/Compose) with unit tests and GitHub Actions CI, and seeded 7 backlog issues. Day 1 is in progress: the AI Fluency course summary is finished, and Claude 101 and a chat exercise remain.
+- **Next:** Day 2, ticket analysis and reproducing a bug.
+- **Blockers:** None.
+```
+
+</details>
+
 | | Notes |
 |---|---|
-| v1 answer, in one line | |
-| v2 answer, in one line | |
+| v1 answer, in one line | No usable draft. Claude asked what the training is and who the update is for, and gave a fill-in-the-blanks template instead of making up progress. |
+| v2 answer, in one line | Send-ready update: Done / Next / Blockers, 64 words, only the given facts. It added a heading line built from the prompt's context. |
 | Which prompt change helped most | |
 | Edits you made before you would send it | |
 | Surprise (good or bad) | |
