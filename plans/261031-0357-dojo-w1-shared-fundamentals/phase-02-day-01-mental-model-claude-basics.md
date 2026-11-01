@@ -21,7 +21,7 @@ Source: [day-01.html](https://dojo.agilityio.dev/schedule/day-01.html)
 - [ ] Course: start [Claude 101](https://academy.claude.com/courses/claude-101) (first conversation, prompting basics), continue into projects/artifacts. Day 1 covers lessons 1–6; Day 2 finishes the course.
   - [x] 1. [What is Claude?](https://academy.claude.com/courses/claude-101/what-is-claude)
   - [x] 2. [Your first conversation with Claude](https://academy.claude.com/courses/claude-101/your-first-conversation-with-claude)
-  - [ ] 3. [Getting better results](https://academy.claude.com/courses/claude-101/getting-better-results)
+  - [x] 3. [Getting better results](https://academy.claude.com/courses/claude-101/getting-better-results)
   - [ ] 4. [Claude desktop app: chat, Cowork, Code](https://academy.claude.com/courses/claude-101/claude-desktop-app-chat-cowork-code)
   - [ ] 5. [Introduction to projects](https://academy.claude.com/courses/claude-101/introduction-to-projects)
   - [ ] 6. [Creating with artifacts](https://academy.claude.com/courses/claude-101/creating-with-artifacts)

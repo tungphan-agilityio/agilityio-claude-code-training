@@ -157,12 +157,54 @@ Classify each of these user reports from a to-do app as "bug" or "enhancement". 
 
 **Compare** with the GitHub labels (`gh issue list`): reports 1–3 are labelled bug (issues #3–#5), and 4–7 are labelled enhancement (issues #6–#9). Then **fix one miss or weak spot** using a technique from the lesson's table: add context, show the format, or ask for its confidence. Re-run the prompt and compare again.
 
+<details>
+<summary>Run 1 result (fresh chat in the Claude app)</summary>
+
+| # | Report | Type | Reason | Confidence |
+|---|---|---|---|---|
+| 1 | Overdue label looks wrong | Bug | Overdue status should reflect the due date, and a likely cause is an off-by-one or timezone error (e.g., comparing a date to a timestamp). | Medium |
+| 2 | Editing a task makes a copy | Bug | An edit should update the task in place, but it inserted a new one, probably because the ID was not preserved. | High |
+| 3 | Blank task in my list | Bug | It breaks the app's own rule against saving without a title, so some path skips validation (blank or whitespace-only titles, or a different save path). | High |
+| 4 | Search tasks | Enhancement | This asks for a new feature, not a fix to existing behavior. | High |
+| 5 | App forgets my tasks | Bug | Tasks should persist, but they reset to the sample data, so either nothing is saved or the seed data overwrites stored tasks on launch. | High |
+| 6 | Show overdue count in header | Enhancement | It adds new information to a header that already works correctly. | High |
+| 7 | Make the list less confusing | Enhancement | It asks for a UX change, and there's no clear expected behavior being violated. | Low |
+
+Assumptions it listed: for #1, the user's "pretty sure" is accurate, so check the due date first. For #3, the app is supposed to enforce a required title. For #7, there's no defined sort order; if there is one and it's inconsistent, this becomes a bug, so ask the reporter what order they expected.
+
+</details>
+
 | | Notes |
 |---|---|
-| Matches out of 7 | |
-| Where it disagreed with the labels, and was it *wrong* or arguably right? (Hint: report 5, "App forgets my tasks", could go either way.) | |
-| Which fix you applied, and did it change the result? | |
-| Would you delegate ticket triage to Claude on Day 2? With what checks? | |
+| Matches out of 7 | **6 of 7.** The only miss is report 5 (issue #7), which Claude called a bug and GitHub labels an enhancement. |
+| Where it disagreed with the labels, and was it *wrong* or arguably right? (Hint: report 5, "App forgets my tasks", could go either way.) | **Report 5 is arguably right from the user's side but wrong for this app.** The README says "Data lives in memory and resets when the app restarts". That's by design, so saving tasks is a feature that hasn't been built yet, not a broken one. Claude didn't have that context and guessed that tasks "should persist". **It said "High" confidence on its one miss**: the loose confidence calibration from the AI capabilities course. **Good:** "Low" confidence on report 7, and a useful flag that report 7 becomes a bug if a sort order is defined. That's a clarifying question for Day 2. **Caution:** the *cause* guesses in the Reason column (ID not preserved, whitespace titles, timezone) are hypotheses. Don't treat them as findings; Day 2 is for checking them by reproducing. |
+| Which fix you applied, and did it change the result? | **Add context**, the lesson's fix for "too generic". Run 2 added one product-context line before the list (see below). **Result: 7 of 7.** Report 5 flipped to Enhancement ("losing them on restart is expected"). Other changes: the reasons guess less about causes (report 2 no longer guesses "ID not preserved"), the report 3 assumption disappeared, and report 1 now suggests *how to check it* (reproduce with tasks due today and tomorrow) instead of only naming possible causes. One sentence of context fixed the miss and made the whole answer more careful. |
+| Would you delegate ticket triage to Claude on Day 2? With what checks? | **Yes, as a first pass:** 6 of 7 with no context. Checks: (1) give it the product facts (the README and what's by design); (2) ignore its confidence labels and verify every "High" against the spec; (3) treat cause guesses as things to test, not answers; (4) a human decides the final label. |
+
+**Run 2 (the fix): add context.** In a **new chat**, paste the same prompt with this line added before the list:
+
+```text
+Product context: this is a training app that, by design, keeps tasks in memory only. Data resets when the app restarts, and saving tasks between launches hasn't been built yet. Classify against what the app is designed to do today.
+```
+
+Expected: report 5 becomes "enhancement". Note whether anything else changes.
+
+<details>
+<summary>Run 2 result (new chat, with the product-context line)</summary>
+
+| # | Report | Classification | Reason | Confidence |
+|---|---|---|---|---|
+| 1 | Overdue label looks wrong | Bug | A task marked Overdue before its due date points to a wrong date comparison, such as a timezone issue or an off-by-one at the day boundary. | Medium |
+| 2 | Editing a task makes a copy | Bug | Editing should update the existing task, but it inserts a new one instead. | High |
+| 3 | Blank task in my list | Bug | Title validation is being bypassed, so something saves a task the app is meant to reject. | High |
+| 4 | Search tasks | Enhancement | This asks for a feature the app doesn't have yet. | High |
+| 5 | App forgets my tasks | Enhancement | The app is designed to keep tasks in memory only, so losing them on restart is expected. Saving tasks between launches would be new work. | High |
+| 6 | Show overdue count in the header | Enhancement | The header's remaining count works as designed, and this asks for a new piece of information. | High |
+| 7 | Make the list less confusing | Enhancement | This is a vague UX request with no defined wrong behavior. | Low |
+
+Assumptions it listed: for #1, it assumes the report is accurate, but the user might have the due date wrong, so reproduce with a task due today or tomorrow. For #7, it becomes a bug if the list is meant to follow a defined order and doesn't, so ask the user what order they expected and check it against the sort spec.
+
+</details>
 
 ---
 
@@ -239,6 +281,6 @@ Finally, open the **Artifacts** tab to confirm it's saved there. Check the **Sha
 
 ## Wrap-up
 
-- Lessons done (tick them in the Day 1 plan, or tell Claude Code): 1 ☑ 2 ☑ 3 ☐ 4 ☐ 5 ☐ 6 ☐
+- Lessons done (tick them in the Day 1 plan, or tell Claude Code): 1 ☑ 2 ☑ 3 ☑ 4 ☐ 5 ☐ 6 ☐
 - One feature you'll keep using from tomorrow:
 - One thing that didn't work as the lesson described:
