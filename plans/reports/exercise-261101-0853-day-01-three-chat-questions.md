@@ -89,9 +89,9 @@ The device clock or timezone is wrong, or the due date isn't what the user remem
 |---|---|
 | v1 answer, in one line | Generic bug-ticket template, with severity, impact and a list of causes; it states "before its due date" as a fact. |
 | v2 answer, in one line | Tighter teammate summary; keeps the user's uncertainty ("pretty sure") and gives ranked hypotheses with the assumption labelled. |
-| Which prompt change helped most | |
+| Which prompt change helped most | "Don't invent facts; mark assumptions as assumptions." It stopped the made-up severity rating and kept the reporter's "pretty sure" uncertainty. The app context (date-only due dates, red = overdue) came second: it made the top hypothesis specific to this app. |
 | Discernment: did it invent anything? | v1 added a severity rating ("Medium"), ticket fields and a cause ranking that the report doesn't support, and it took "not late yet" as confirmed. v2 kept to the report and labelled its assumption, though "Pixel" in the title is the only device detail given. |
-| Surprise (good or bad) | |
+| Surprise (good or bad) | Good: v2's top hypothesis (a date-only due date compared as start of day) is concrete and testable on Day 2. Bad: v1 sounded just as confident as v2 while adding facts nobody gave it, so a confident tone is no sign of accuracy. |
 
 ---
 
@@ -272,10 +272,10 @@ Version notes:
 |---|---|
 | v1 answer, in one line | Correct, compact definition with a before/after example and the "lowest common ancestor" rule; uses `remember`, no version notes. |
 | v2 answer, in one line | Same core idea, framed for a Views developer (`EditText` comparison), plus a route/screen ViewModel pattern, version notes and three mistakes; switches to `rememberSaveable`. |
-| Which prompt change helped most | |
-| Claim verified against the docs, and the result | |
+| Which prompt change helped most | Naming the audience ("knows Android Views, new to Compose"). It produced the `EditText` comparison, which made the idea click. "If something depends on the Compose version, say so" came second: it surfaced the `TextFieldState` and `collectAsStateWithLifecycle` notes that v1 left out. |
+| Claim verified against the docs, and the result | Checked both version notes against the AndroidX release notes. **`collectAsStateWithLifecycle()` in `lifecycle-runtime-compose` 2.6.0+: holds.** It was added in 2.6.0-alpha01 and is stable from 2.6.0. **"Foundation 1.7 introduced `TextFieldState`": mostly holds.** The API was already in Foundation 1.6 as the experimental `BasicTextField2`; `BasicTextField(state)` and `TextFieldState` became stable in 1.7.0-alpha05. |
 | Compared with the Dojo Tasks code | The app matches the v2 pattern. `TaskFormScreen` keeps its fields in `rememberSaveable { mutableStateOf(...) }` at screen level, `TasksViewModel` exposes `StateFlow`s, and `MainActivity` acts as the route that calls `collectAsStateWithLifecycle()`. |
-| Surprise (good or bad) | |
+| Surprise (good or bad) | Good: v2's mistake #1 (async text-field updates make the cursor jump) is a real pitfall I wouldn't have thought to ask about. Bad: the version note was close but simplified; `TextFieldState` predates 1.7 under another name, so version claims still need a source check. |
 
 ---
 
@@ -338,14 +338,14 @@ In the meantime, here's a skeleton I can fill in once I have the details:
 |---|---|
 | v1 answer, in one line | No usable draft. Claude asked what the training is and who the update is for, and gave a fill-in-the-blanks template instead of making up progress. |
 | v2 answer, in one line | Send-ready update: Done / Next / Blockers, 64 words, only the given facts. It added a heading line built from the prompt's context. |
-| Which prompt change helped most | |
-| Edits you made before you would send it | |
-| Surprise (good or bad) | |
+| Which prompt change helped most | Giving the facts myself, with "and nothing else". v1 had no facts, so it could only ask questions; v2 had nothing to make up. The fixed format (3 bullets, under 80 words) made it ready to send as-is. |
+| Edits you made before you would send it | Minor: drop the heading line (my lead knows the program) and update the Day 1 line, since the chat exercise is now done and only Claude 101 and the AI Fluency quiz remain. |
+| Surprise (good or bad) | Good: with a thin prompt, v1 asked clarifying questions instead of inventing progress. That's the opposite of Question 1, where the thin prompt got made-up details. Claude asks when the gap is obvious, but not always. |
 
 ---
 
 ## Reflection
 
-- Where did the output surprise you, for better or worse?
-- Which Description element (product, process or performance) helped most overall?
-- One prompting habit to keep for Day 2:
+- **Where did the output surprise you, for better or worse?** Thin prompts behaved inconsistently. For the bug report Claude filled the gaps with confident made-up details (a severity rating, causes stated as likely). For the status update it asked questions instead. Even the good v2 answers had small slips: the `TextFieldState` version note was simplified. Checking against a source is still my job.
+- **Which Description element (product, process or performance) helped most overall?** Product: saying exactly what output I wanted (sections, length, format) made the biggest difference in all three. Process came next in Question 1, where "don't invent facts; mark assumptions" changed the content, not just the shape. Performance, meaning the audience, mattered most in Question 2.
+- **One prompting habit to keep for Day 2:** Give Claude the facts and context, state the output format, and add "don't invent facts; mark assumptions." Day 2's ticket analysis works from vague reports, so that rule should stop it from inventing repro details.

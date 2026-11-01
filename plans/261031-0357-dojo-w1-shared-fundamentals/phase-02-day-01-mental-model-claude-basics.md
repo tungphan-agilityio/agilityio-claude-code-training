@@ -27,7 +27,7 @@ Worksheet with the three questions (v1 and v2 prompts) and blanks for your notes
 
 ## Deliverables
 
-- [ ] 3 chat answers + notes on prompt changes (save under `plans/reports/`)
+- [x] 3 chat answers + notes on prompt changes: [exercise-261101-0853-day-01-three-chat-questions.md](../reports/exercise-261101-0853-day-01-three-chat-questions.md)
 
 ## Notes / Skills
 
