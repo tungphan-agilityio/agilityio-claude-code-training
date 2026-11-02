@@ -25,7 +25,7 @@ Source: [day-01.html](https://dojo.agilityio.dev/schedule/day-01.html)
   - [ ] 4. [Claude desktop app: chat, Cowork, Code](https://academy.claude.com/courses/claude-101/claude-desktop-app-chat-cowork-code)
   - [ ] 5. [Introduction to projects](https://academy.claude.com/courses/claude-101/introduction-to-projects)
   - [ ] 6. [Creating with artifacts](https://academy.claude.com/courses/claude-101/creating-with-artifacts)
-- Practice sheet for lessons 1–6 (prompts and notes tables): [exercise-261101-2146-claude-101-lessons-1-6-practice.md](../reports/exercise-261101-2146-claude-101-lessons-1-6-practice.md)
+- [ ] Practice sheet for lessons 1–6 (prompts and notes tables): [exercise-261101-2146-claude-101-lessons-1-6-practice.md](../reports/exercise-261101-2146-claude-101-lessons-1-6-practice.md)
 - [x] Lesson-by-lesson summary of Claude 101 (all 13 lessons), from the lesson pages: [course-summary-261101-2107-claude-101.md](../reports/course-summary-261101-2107-claude-101.md)
 - [x] Git block: clone, branch, commit, push (done via PR #11)
 

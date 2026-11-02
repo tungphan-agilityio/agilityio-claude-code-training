@@ -212,8 +212,63 @@ Assumptions it listed: for #1, it assumes the report is accurate, but the user m
 
 **Practice A: Chat quick entry and a screenshot.**
 - Double-tap **Option** to open quick entry.
-- Share a screenshot of any app screen, for example the Dojo Tasks list on the emulator. One is saved at `/private/tmp/claude-501/-Users-nova-dev-agility-claudecode-training-tungphan-agilityio-claude-code-training/7eb3f6ec-840e-4ad9-a6bd-0ba273afe5b0/scratchpad/list.png`.
+- Share a screenshot of any app screen, for example the Dojo Tasks list on the emulator. One is saved at [screenshot-261031-dojo-tasks-list.png](screenshot-261031-dojo-tasks-list.png).
 - Ask: "What would a first-time user find confusing on this screen?" Then follow up once.
+
+<details>
+<summary>Practice A result (quick entry, screenshot attached)</summary>
+
+Assumption it stated: this is the main list on first launch, with no onboarding.
+
+**Likely confusion**
+1. **The "+" FAB has no label.** An extended FAB ("+ Add task") would remove the guess. It also said the FAB wasn't visible in "Image 2", which would leave users no way to add a task.
+2. **Nothing hints at what a row does.** Tap the text, toggle the checkbox, or nothing? Edit and delete aren't discoverable (no swipe hint, overflow menu or long-press cue).
+3. **Completed tasks just sit at the bottom.** There's no "Completed" header or divider.
+4. **Dates are raw ISO (`2026-10-30`).** Relative ("2 days overdue") or localized ("Oct 30") dates are faster to read.
+5. **"Due today" isn't called out.** If the screenshot was taken Nov 1, the `2026-11-01` task looks like any future task. If taken Nov 2, it should show as overdue and doesn't, so check for a bug.
+6. **The sort order isn't stated.** It looks like due date ascending, then no date, then completed. "No due date" between dated and completed tasks can look random.
+7. **Completed tasks still show a due date.** That's noise; show a completion date or nothing.
+8. **"4 remaining" says nothing about overdue tasks.** "4 remaining · 2 overdue" would surface the urgent part.
+
+**Minor:** the large empty area could hold a first-run hint ("Tap + to add a task"). The seed tasks' training jargon ("seeded bug", "Dojo master plan") would confuse real users.
+
+**Quick wins it picked:** 1, 4 and 5 (cheap Compose changes, biggest clarity payoff).
+
+</details>
+
+**Checking the answer against what we know:**
+- **It missed the seeded overdue bug.** The screenshot was taken on 2026-10-31, and "Write repro steps for a seeded bug" shows **Overdue** on the day it's due. That's issue #3, "Overdue label looks wrong". Claude didn't know the capture date, so it reasoned about Nov 1 and Nov 2 and missed the real bug. This is the Lesson 3 point again: missing context leads to a confident wrong guess.
+- **"FAB not visible in Image 2" doesn't match the screenshot.** The FAB is at the bottom right. The screen was attached with quick entry's built-in capture, so that capture must have sent two images, and in the second one the FAB was cut off or hidden. **Lesson:** check what the capture actually attached before trusting conclusions about layout.
+- **Overlap with existing issues:** its item 8 is issue #8 (show the overdue count), and its item 6 is close to issue #9 (make the list less confusing). Both were found without any hints.
+- **New ideas not yet in the backlog:** #1, #2, #4 and #7 are candidates for enhancement issues.
+
+**Follow-up** (tests whether one fact fixes the miss): "This screenshot was taken on 2026-10-31. Re-check item 5 and every Overdue label against that date."
+
+<details>
+<summary>Follow-up result</summary>
+
+With 2026-10-31 as the reference date, one label is wrong:
+
+| Task | Due | Shown | Correct? |
+|---|---|---|---|
+| Set up Claude Code Desktop | 10-30 | Overdue | ✅ One day past due |
+| Write repro steps for a seeded bug | **10-31** | **Overdue** | ❌ Due **today**, not overdue |
+| Draft a PR description | 11-01 | Not overdue | ✅ Due tomorrow |
+| Review a PR | none | Not overdue | ✅ |
+| Read the Dojo master plan (done) | 10-29 | Not overdue | ✅ Completed tasks shouldn't be flagged |
+
+**Revised item 5:** a task due today is labelled Overdue. Because there's no "Due today" state either, the most urgent task looks the same as one that's already late.
+
+**Likely cause**, assuming due dates are date-only: (a) the code compares the due date as an instant against the current time (midnight 10-31 < 11:44 10-31), or (b) it uses `<=` where `<` belongs. Its suggested fix compares calendar dates, `!task.done && task.due?.isBefore(today) == true`, plus a `isDueToday` state and an injected `Clock`. It also mentioned UTC `Instant` zone handling and recommended a unit test covering yesterday, today, tomorrow, no date and a completed task.
+
+</details>
+
+**Checking the follow-up against the code:**
+- **The table is now fully correct.** One fact (the date) turned a miss into the right diagnosis: Lesson 3's "add context" fix again.
+- **Cause (b) is the real one; (a) is wrong.** `TaskRules.isOverdue` (`android-app/app/src/main/java/com/dojo/tasks/domain/TaskRules.kt:16`) already uses `LocalDate`, with no time part. It returns `!due.isAfter(today)`, which means due ≤ today, so "due today" counts as overdue. The KDoc even says "before [today]", so the code contradicts its own comment.
+- **The fix is right; part of the advice doesn't apply.** Changing `!due.isAfter(today)` to `due.isBefore(today)` is the one-line fix. `Clock` injection isn't needed because `today` is already a parameter (`TaskListScreen.kt:40` passes `LocalDate.now()`). There's no `Instant`, so the UTC advice doesn't apply either. It gave generic advice without seeing the code.
+- **The test gap is real.** `TaskRulesTest.kt` covers yesterday, tomorrow, done and no date, but **not "due today"**, which is exactly why the bug slipped through. Its test suggestion would catch it.
+- This is the seeded bug for Day 2 (issue #3), so it's **not fixed here**: the repro, test and fix belong to that exercise.
 
 **Practice B: a Cowork hand-off**, if it's on your plan.
 - Create an empty folder such as `~/dojo-cowork-out`. **Don't point Cowork at the repo**: it saves files into the folder it's given.
@@ -227,7 +282,7 @@ Read the three course summaries in this folder and produce one file, "day-1-stud
 
 | | Notes |
 |---|---|
-| Quick entry: useful mid-task, or in the way? | |
+| Quick entry: useful mid-task, or in the way? | **Useful.** ⌥⌥ opened the box on the first try, right over the emulator, with no settings or permission changes. The built-in capture attached the screen in one click, so there was no saving and dragging files and no switching to the Claude window. I'd use it while coding for a quick "look at this screen" question. **Watch out:** the capture seems to have sent two images (Claude mentioned an "Image 2" with no FAB), so check the attachment before trusting conclusions about layout. And it has no project context: it missed the overdue bug until I gave it the date. Asking Claude this very question also made it assume an in-app feature, which was the wrong context. |
 | Cowork: did it ask scoping questions or show a plan? Was the output usable? | |
 | Code tab, Plan mode: did it stay read-only? | |
 | Reflection: one whole task you've been feeding in question by question | |
