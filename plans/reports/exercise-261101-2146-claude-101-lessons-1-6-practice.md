@@ -342,9 +342,36 @@ Read the three course summaries in this folder and produce one file, "day-1-stud
 
 | | Notes |
 |---|---|
-| Did Chat 1 cite the right summary? | |
-| Chat 2 result: did it know your previous chat? (Memory may blur this, so note whether Memory is on.) | |
-| What else would you add to this project's knowledge later? | |
+<details>
+<summary>Chat 1 answer: "Which habits from the three courses should I apply on Day 2, ticket analysis?"</summary>
+
+For Day 2 ticket analysis, I'd apply these habits. I'm assuming Day 2 means analyzing the seeded GitHub issues against Dojo Tasks; I didn't open the Day 2 phase file, so adjust if the scope differs.
+
+1. **Decide your part first (AI Fluency, Delegation).** Before pasting tickets, decide what you'll judge yourself, such as severity or whether something is really a bug, and what Claude should draft.
+2. **Give rich context and explicit rules (Claude 101 Lesson 2; AI Fluency Lesson 9).** State your role (Android dev on Dojo Tasks, Kotlin and Compose), the output format per ticket, and the rule "don't invent facts; mark assumptions."
+3. **Ask for reasoning before the verdict (AI Fluency Lesson 9).** Have it reason through each ticket before classifying it, so you can see where it goes wrong.
+4. **Treat specifics as suspect (AI Capabilities Lesson 4).** Confident tone doesn't mean accuracy. Verify line numbers, API names, versions and quoted behavior, since fabrication concentrates there.
+5. **Confirm against the app, not the prose (Claude 101 "How this applies"; README ground rules).** Reproduce the bug, or run the unit tests and logs, before accepting an analysis. Trust runs over fluent answers.
+6. **Keep the batch small (AI Capabilities Lesson 8).** Analyze tickets in small groups, put the key rules at the top and repeat them at the end, and start a fresh chat with a short summary if quality slips.
+7. **State the goal, not just the format (AI Capabilities Lesson 10).** Say what the analysis is for, such as choosing the next fix, because "make it shorter" style instructions get followed literally.
+8. **Give structured feedback, and don't cave to pushback (AI Fluency Lesson 10; AI Capabilities Lesson 3).** When you disagree, name the problem, say why, and suggest the fix. Change a classification only if you have evidence, not because it pushed back.
+
+Sources: the three Academy course pages; the summaries are in the Dojo Training project.
+
+</details>
+
+<details>
+<summary>Chat 2 answer: "What did I ask you in my last chat?"</summary>
+
+I can't see your earlier chats. In this session, the last thing you asked was which habits from the three courses to apply on Day 2 for ticket analysis, and I answered that from the Dojo Training project's course summaries. If you meant a different conversation, I can't retrieve it from here, so you'd need to open it in your chat history.
+
+</details>
+
+| | Notes |
+|---|---|
+| Did Chat 1 cite the right summary? | **Yes, and it followed the project instructions.** Every habit names its course and lesson, and I checked each one against the summaries: AI Fluency L9 has the "think first" technique and L10 the four-part feedback; Capabilities L3 has sycophancy, L4 next-token prediction and L10 steerability; Claude 101 L2 has the prompt framework. **One small mix-up:** habit 6's "repeat key rules at the end" is from Capabilities L9 (the Try-it-out page), not L8; L8 says to put important material at the top. **Instructions applied:** it marked its assumption about Day 2's scope ("I didn't open the Day 2 phase file") and stayed concise. **It reached beyond the summaries well:** habit 5 used the README's ground rule ("trust tests, runs and logs over fluent answers"), which is in the project knowledge too. |
+| Chat 2 result: did it know your previous chat? (Memory may blur this, so note whether Memory is on.) | **It said it couldn't see earlier chats, but then quoted Chat 1's question "in this session".** That means the question went into the *same* conversation as Chat 1, not a new chat, so it was reading its own history. It doesn't show that chats share context. **Redo:** in the project, click **New chat** first, then ask again. Expected: no knowledge of Chat 1, apart from anything Memory adds (Memory is on; chat search is off). **Redo, in a genuinely new chat:** "I can't see previous chats in this project." That confirms the lesson: **chats in a project share the knowledge files and instructions, not each other's history.** Memory didn't fill the gap either, because memory stores facts about me, not chat transcripts, and chat search is off. To carry something from one chat to the next, put it in the project knowledge. |
+| What else would you add to this project's knowledge later? | (1) **The Day 2 phase file**, since Chat 1 had to assume Day 2's scope. More generally, add each day's phase file before that day starts. (2) **The issue texts** (#3–#9, the reporter's words only) for ticket analysis. (3) **The Day 1 exercise worksheet**, so it can see which prompting habits I've already practised. **Keep out:** the Android source code, which belongs to Claude Code with the real repo, and anything with secrets. Keep the knowledge current: replace files when they change instead of piling up versions. |
 
 ---
 
@@ -375,6 +402,6 @@ Finally, open the **Artifacts** tab to confirm it's saved there. Check the **Sha
 
 ## Wrap-up
 
-- Lessons done (tick them in the Day 1 plan, or tell Claude Code): 1 ☑ 2 ☑ 3 ☑ 4 ☑ 5 ☐ 6 ☐
+- Lessons done (tick them in the Day 1 plan, or tell Claude Code): 1 ☑ 2 ☑ 3 ☑ 4 ☑ 5 ☑ 6 ☐
 - One feature you'll keep using from tomorrow:
 - One thing that didn't work as the lesson described:
