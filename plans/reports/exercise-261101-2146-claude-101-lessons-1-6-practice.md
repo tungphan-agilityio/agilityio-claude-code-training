@@ -280,11 +280,50 @@ Read the three course summaries in this folder and produce one file, "day-1-stud
 
 **Practice C: just look at the Code tab.** Open it, pick **Local**, choose the repo folder, set the mode to **Plan** and ask: "Describe this repo's structure. Don't change anything." Day 4 covers Claude Code properly.
 
+<details>
+<summary>Practice C result (Desktop Code tab, Local, Plan mode)</summary>
+
+```text
+.
+├── README.md                  # program overview, setup, progress commands, ground rules
+├── .gitignore
+├── .github/workflows/
+│   └── android-ci.yml         # unit tests + lint + debug build on PRs and pushes to main
+├── android-app/               # "Dojo Tasks" Gradle project (Kotlin, Compose, Material 3)
+│   ├── build.gradle.kts, settings.gradle.kts, gradle.properties
+│   ├── gradle/libs.versions.toml, gradle/wrapper/, gradlew(.bat)
+│   └── app/
+│       ├── build.gradle.kts
+│       └── src/
+│           ├── main/          # AndroidManifest.xml, res/values/strings.xml
+│           │   └── java/com/dojo/tasks/
+│           │       ├── MainActivity.kt
+│           │       ├── data/    # Task model, in-memory TaskRepository
+│           │       ├── domain/  # TaskRules.kt (overdue, title validation, sorting)
+│           │       └── ui/      # TasksViewModel, TaskList/Detail/Form screens, theme/Theme.kt
+│           └── test/          # unit tests: InMemoryTaskRepositoryTest, TaskRulesTest, TasksViewModelTest
+└── plans/
+    ├── 261031-0357-dojo-w1-shared-fundamentals/        # Days 0–3 (plan.md + 4 phase files)
+    ├── 261031-0358-dojo-w2-dev-core/                   # Days 4–6 (3 phases)
+    ├── 261031-0358-dojo-w3-dev-extend-automate-review/ # Days 7–11 (5 phases)
+    ├── 261031-0358-dojo-capstone/                      # Days 12–15 (4 phases)
+    ├── 261031-0409-readme-dojo-training-overview/      # plan for rewriting the README
+    └── reports/               # course summaries, exercise notes, one screenshot
+```
+
+</details>
+
+**Checking the answer against the repo (with `ls`, `find` and `git status`):**
+- **Accurate.** Every folder, file and comment matches the repo, including the three test files, the phase counts (4, 3, 5 and 4) and "one screenshot" in `plans/reports/`.
+- **Left out, reasonably:** `android-app/local.properties`, which is git-ignored and machine-specific, and `.DS_Store`.
+- **Not mentioned:** `.claude/` doesn't exist yet, although the README's layout lists it (it arrives on Days 7–9). The README-vs-repo gap went unnoticed because the prompt only asked for the structure.
+- **Read-only confirmed:** `git status` was clean and `HEAD` stayed at `bc533a0` before and after the session.
+
 | | Notes |
 |---|---|
 | Quick entry: useful mid-task, or in the way? | **Useful.** ⌥⌥ opened the box on the first try, right over the emulator, with no settings or permission changes. The built-in capture attached the screen in one click, so there was no saving and dragging files and no switching to the Claude window. I'd use it while coding for a quick "look at this screen" question. **Watch out:** the capture seems to have sent two images (Claude mentioned an "Image 2" with no FAB), so check the attachment before trusting conclusions about layout. And it has no project context: it missed the overdue bug until I gave it the date. Asking Claude this very question also made it assume an in-app feature, which was the wrong context. |
 | Cowork: did it ask scoping questions or show a plan? Was the output usable? | |
-| Code tab, Plan mode: did it stay read-only? | |
+| Code tab, Plan mode: did it stay read-only? | **Yes.** The working tree was clean and `HEAD` was `bc533a0` both before and after; nothing was edited, created or committed. It explored the repo by reading files and returned an accurate annotated tree. Compared with the Chat tab, it read the *real* files, not an attached copy, so it knew things the README doesn't say (three test classes, `libs.versions.toml`, `theme/Theme.kt`). Plan mode is the safe way to point Claude at a codebase you only want explained. |
 | Reflection: one whole task you've been feeding in question by question | |
 
 ---
