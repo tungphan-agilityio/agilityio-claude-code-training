@@ -22,6 +22,12 @@ class TaskRulesTest {
         assertFalse(TaskRules.isOverdue(Task(title = "t", dueDate = today.plusDays(1)), today))
     }
 
+    // Issue #3: a task due today shows as Overdue, but the user is not late yet.
+    @Test
+    fun `task due today is not overdue`() {
+        assertFalse(TaskRules.isOverdue(Task(title = "t", dueDate = today), today))
+    }
+
     @Test
     fun `done task is never overdue`() {
         assertFalse(TaskRules.isOverdue(Task(title = "t", dueDate = today.minusDays(5), done = true), today))
