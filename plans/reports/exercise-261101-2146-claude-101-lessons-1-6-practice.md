@@ -392,16 +392,48 @@ Optionally, make an interactive artifact: "Build an interactive quiz with 8 ques
 
 Finally, open the **Artifacts** tab to confirm it's saved there. Check the **Share** options without sharing anything.
 
+<details>
+<summary>Final "Day 1 recap" artifact (after all three edits)</summary>
+
+```text
+Day 1 recap
+Nova · Dojo Claude Code training · Day 1 of 15
+
+Done
+- Passed the AI Fluency: Framework and foundations quiz (badge earned)
+- Passed the AI capabilities and limitations quiz (badge earned)
+- Claude 101 lessons 1–6 done, with hands-on practice for each
+- Day 1 chat exercise: 3 questions, thin vs. described prompts, with notes on what improved each answer
+- Git block done (branch, commit, push, PRs)
+
+Learned
+- AI Fluency: the 4Ds (Delegation, Description, Discernment, Diligence) and three modes (automation, augmentation, agency).
+- AI capabilities and limitations: the model predicts text, so fabrication concentrates in specifics like names, numbers and URLs. Verify those.
+- Claude 101: brief Claude with stage, task and rules, then iterate. Projects hold knowledge, skills hold procedures, artifacts are the outputs.
+
+Next
+- Day 2: Claude 101 lessons 7–13, then the quiz and badge.
+- Training repo on GitHub (link)
+
+Assumption: Day 2 scope is taken from the Claude 101 course summary (lessons 7–13, quiz, badge).
+```
+
+</details>
+
+**Checking the recap:**
+- **It meets the brief.** It has all three sections, uses exactly the five "Done" facts I gave it (no invented progress), gives one "Learned" bullet per course with the right content for each, adds the repo link under Next, and comes to 156 words, under the 200 limit.
+- **The "Next" section is incomplete.** Day 2 is mainly ticket analysis, reproducing a seeded bug and Git conflict practice, with Claude 101 lessons 7–13 only as the course part. The project knowledge doesn't include the Day 2 phase file, so it built "Next" from the only source it had (the Claude 101 summary). **It also flagged that as an assumption**, which is exactly how I caught it. This is the Lesson 5 note in action: add the Day 2 phase file to the project knowledge. Fix before sending: "Next: Day 2: analyse 5 backlog tickets, reproduce the seeded bug with repro steps and a failing test, resolve merge conflict #1; finish Claude 101."
+
 | | Notes |
 |---|---|
-| Artifact type you got (Doc, or a plain artifact) | |
-| Edit vs. comment vs. ask: which was fastest for what? | |
-| Share options available on your plan | |
+| Artifact type you got (Doc, or a plain artifact) | **A plain artifact**, not a Claude Doc. "Create an artifact: a one-page doc" was read as "make an artifact", so it didn't use the Claude Docs experience. To get a living Doc, ask for one by name ("Create this as a Claude Doc") or start from the Artifacts tab and pick *Doc*. On Team or Enterprise, an admin may have turned Docs off. **Lesson:** the wording of the request picks the tool, which is the "ask for the deliverable" tip in practice. |
+| Edit vs. comment vs. ask: which was fastest for what? | **Asking was the only way that applied.** Per Lesson 6, editing directly and commenting for Claude belong to Design, Slides and Docs, so a plain artifact only changes when you ask in the chat. Asking worked well: "add a one-line repo link under Next" landed in one pass. For small fixes like a typo, a Doc's direct editing would be faster than asking and waiting for a rewrite. |
+| Share options available on your plan | **Private** or **Anyone with the link**, the Pro/Max choice from Lesson 6, with no per-person or organization-only options. Only the artifact is shared, never the chat. Recap link: https://claude.ai/artifact/2xFLQ3sGdtR2pvtRkRsfhN. It only opens for others if set to "Anyone with the link"; switch it back to Private if you only meant to look. |
 
 ---
 
 ## Wrap-up
 
-- Lessons done (tick them in the Day 1 plan, or tell Claude Code): 1 ☑ 2 ☑ 3 ☑ 4 ☑ 5 ☑ 6 ☐
+- Lessons done (tick them in the Day 1 plan, or tell Claude Code): 1 ☑ 2 ☑ 3 ☑ 4 ☑ 5 ☑ 6 ☑
 - One feature you'll keep using from tomorrow:
 - One thing that didn't work as the lesson described:
