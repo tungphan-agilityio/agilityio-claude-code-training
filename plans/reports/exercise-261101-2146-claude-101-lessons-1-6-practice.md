@@ -212,8 +212,63 @@ Assumptions it listed: for #1, it assumes the report is accurate, but the user m
 
 **Practice A: Chat quick entry and a screenshot.**
 - Double-tap **Option** to open quick entry.
-- Share a screenshot of any app screen, for example the Dojo Tasks list on the emulator. One is saved at `/private/tmp/claude-501/-Users-nova-dev-agility-claudecode-training-tungphan-agilityio-claude-code-training/7eb3f6ec-840e-4ad9-a6bd-0ba273afe5b0/scratchpad/list.png`.
+- Share a screenshot of any app screen, for example the Dojo Tasks list on the emulator. One is saved at [screenshot-261031-dojo-tasks-list.png](screenshot-261031-dojo-tasks-list.png).
 - Ask: "What would a first-time user find confusing on this screen?" Then follow up once.
+
+<details>
+<summary>Practice A result (quick entry, screenshot attached)</summary>
+
+Assumption it stated: this is the main list on first launch, with no onboarding.
+
+**Likely confusion**
+1. **The "+" FAB has no label.** An extended FAB ("+ Add task") would remove the guess. It also said the FAB wasn't visible in "Image 2", which would leave users no way to add a task.
+2. **Nothing hints at what a row does.** Tap the text, toggle the checkbox, or nothing? Edit and delete aren't discoverable (no swipe hint, overflow menu or long-press cue).
+3. **Completed tasks just sit at the bottom.** There's no "Completed" header or divider.
+4. **Dates are raw ISO (`2026-10-30`).** Relative ("2 days overdue") or localized ("Oct 30") dates are faster to read.
+5. **"Due today" isn't called out.** If the screenshot was taken Nov 1, the `2026-11-01` task looks like any future task. If taken Nov 2, it should show as overdue and doesn't, so check for a bug.
+6. **The sort order isn't stated.** It looks like due date ascending, then no date, then completed. "No due date" between dated and completed tasks can look random.
+7. **Completed tasks still show a due date.** That's noise; show a completion date or nothing.
+8. **"4 remaining" says nothing about overdue tasks.** "4 remaining · 2 overdue" would surface the urgent part.
+
+**Minor:** the large empty area could hold a first-run hint ("Tap + to add a task"). The seed tasks' training jargon ("seeded bug", "Dojo master plan") would confuse real users.
+
+**Quick wins it picked:** 1, 4 and 5 (cheap Compose changes, biggest clarity payoff).
+
+</details>
+
+**Checking the answer against what we know:**
+- **It missed the seeded overdue bug.** The screenshot was taken on 2026-10-31, and "Write repro steps for a seeded bug" shows **Overdue** on the day it's due. That's issue #3, "Overdue label looks wrong". Claude didn't know the capture date, so it reasoned about Nov 1 and Nov 2 and missed the real bug. This is the Lesson 3 point again: missing context leads to a confident wrong guess.
+- **"FAB not visible in Image 2" doesn't match the screenshot.** The FAB is at the bottom right. The screen was attached with quick entry's built-in capture, so that capture must have sent two images, and in the second one the FAB was cut off or hidden. **Lesson:** check what the capture actually attached before trusting conclusions about layout.
+- **Overlap with existing issues:** its item 8 is issue #8 (show the overdue count), and its item 6 is close to issue #9 (make the list less confusing). Both were found without any hints.
+- **New ideas not yet in the backlog:** #1, #2, #4 and #7 are candidates for enhancement issues.
+
+**Follow-up** (tests whether one fact fixes the miss): "This screenshot was taken on 2026-10-31. Re-check item 5 and every Overdue label against that date."
+
+<details>
+<summary>Follow-up result</summary>
+
+With 2026-10-31 as the reference date, one label is wrong:
+
+| Task | Due | Shown | Correct? |
+|---|---|---|---|
+| Set up Claude Code Desktop | 10-30 | Overdue | ✅ One day past due |
+| Write repro steps for a seeded bug | **10-31** | **Overdue** | ❌ Due **today**, not overdue |
+| Draft a PR description | 11-01 | Not overdue | ✅ Due tomorrow |
+| Review a PR | none | Not overdue | ✅ |
+| Read the Dojo master plan (done) | 10-29 | Not overdue | ✅ Completed tasks shouldn't be flagged |
+
+**Revised item 5:** a task due today is labelled Overdue. Because there's no "Due today" state either, the most urgent task looks the same as one that's already late.
+
+**Likely cause**, assuming due dates are date-only: (a) the code compares the due date as an instant against the current time (midnight 10-31 < 11:44 10-31), or (b) it uses `<=` where `<` belongs. Its suggested fix compares calendar dates, `!task.done && task.due?.isBefore(today) == true`, plus a `isDueToday` state and an injected `Clock`. It also mentioned UTC `Instant` zone handling and recommended a unit test covering yesterday, today, tomorrow, no date and a completed task.
+
+</details>
+
+**Checking the follow-up against the code:**
+- **The table is now fully correct.** One fact (the date) turned a miss into the right diagnosis: Lesson 3's "add context" fix again.
+- **Cause (b) is the real one; (a) is wrong.** `TaskRules.isOverdue` (`android-app/app/src/main/java/com/dojo/tasks/domain/TaskRules.kt:16`) already uses `LocalDate`, with no time part. It returns `!due.isAfter(today)`, which means due ≤ today, so "due today" counts as overdue. The KDoc even says "before [today]", so the code contradicts its own comment.
+- **The fix is right; part of the advice doesn't apply.** Changing `!due.isAfter(today)` to `due.isBefore(today)` is the one-line fix. `Clock` injection isn't needed because `today` is already a parameter (`TaskListScreen.kt:40` passes `LocalDate.now()`). There's no `Instant`, so the UTC advice doesn't apply either. It gave generic advice without seeing the code.
+- **The test gap is real.** `TaskRulesTest.kt` covers yesterday, tomorrow, done and no date, but **not "due today"**, which is exactly why the bug slipped through. Its test suggestion would catch it.
+- This is the seeded bug for Day 2 (issue #3), so it's **not fixed here**: the repro, test and fix belong to that exercise.
 
 **Practice B: a Cowork hand-off**, if it's on your plan.
 - Create an empty folder such as `~/dojo-cowork-out`. **Don't point Cowork at the repo**: it saves files into the folder it's given.
@@ -225,12 +280,51 @@ Read the three course summaries in this folder and produce one file, "day-1-stud
 
 **Practice C: just look at the Code tab.** Open it, pick **Local**, choose the repo folder, set the mode to **Plan** and ask: "Describe this repo's structure. Don't change anything." Day 4 covers Claude Code properly.
 
+<details>
+<summary>Practice C result (Desktop Code tab, Local, Plan mode)</summary>
+
+```text
+.
+├── README.md                  # program overview, setup, progress commands, ground rules
+├── .gitignore
+├── .github/workflows/
+│   └── android-ci.yml         # unit tests + lint + debug build on PRs and pushes to main
+├── android-app/               # "Dojo Tasks" Gradle project (Kotlin, Compose, Material 3)
+│   ├── build.gradle.kts, settings.gradle.kts, gradle.properties
+│   ├── gradle/libs.versions.toml, gradle/wrapper/, gradlew(.bat)
+│   └── app/
+│       ├── build.gradle.kts
+│       └── src/
+│           ├── main/          # AndroidManifest.xml, res/values/strings.xml
+│           │   └── java/com/dojo/tasks/
+│           │       ├── MainActivity.kt
+│           │       ├── data/    # Task model, in-memory TaskRepository
+│           │       ├── domain/  # TaskRules.kt (overdue, title validation, sorting)
+│           │       └── ui/      # TasksViewModel, TaskList/Detail/Form screens, theme/Theme.kt
+│           └── test/          # unit tests: InMemoryTaskRepositoryTest, TaskRulesTest, TasksViewModelTest
+└── plans/
+    ├── 261031-0357-dojo-w1-shared-fundamentals/        # Days 0–3 (plan.md + 4 phase files)
+    ├── 261031-0358-dojo-w2-dev-core/                   # Days 4–6 (3 phases)
+    ├── 261031-0358-dojo-w3-dev-extend-automate-review/ # Days 7–11 (5 phases)
+    ├── 261031-0358-dojo-capstone/                      # Days 12–15 (4 phases)
+    ├── 261031-0409-readme-dojo-training-overview/      # plan for rewriting the README
+    └── reports/               # course summaries, exercise notes, one screenshot
+```
+
+</details>
+
+**Checking the answer against the repo (with `ls`, `find` and `git status`):**
+- **Accurate.** Every folder, file and comment matches the repo, including the three test files, the phase counts (4, 3, 5 and 4) and "one screenshot" in `plans/reports/`.
+- **Left out, reasonably:** `android-app/local.properties`, which is git-ignored and machine-specific, and `.DS_Store`.
+- **Not mentioned:** `.claude/` doesn't exist yet, although the README's layout lists it (it arrives on Days 7–9). The README-vs-repo gap went unnoticed because the prompt only asked for the structure.
+- **Read-only confirmed:** `git status` was clean and `HEAD` stayed at `bc533a0` before and after the session.
+
 | | Notes |
 |---|---|
-| Quick entry: useful mid-task, or in the way? | |
-| Cowork: did it ask scoping questions or show a plan? Was the output usable? | |
-| Code tab, Plan mode: did it stay read-only? | |
-| Reflection: one whole task you've been feeding in question by question | |
+| Quick entry: useful mid-task, or in the way? | **Useful.** ⌥⌥ opened the box on the first try, right over the emulator, with no settings or permission changes. The built-in capture attached the screen in one click, so there was no saving and dragging files and no switching to the Claude window. I'd use it while coding for a quick "look at this screen" question. **Watch out:** the capture seems to have sent two images (Claude mentioned an "Image 2" with no FAB), so check the attachment before trusting conclusions about layout. And it has no project context: it missed the overdue bug until I gave it the date. Asking Claude this very question also made it assume an in-app feature, which was the wrong context. |
+| Cowork: did it ask scoping questions or show a plan? Was the output usable? | **Usable, and the hand-off stayed in its box.** It wrote one file, `~/dojo-cowork-out/day-1-study-sheet.md` (8 KB), into the scratch folder only. The three source summaries were untouched (checksums matched the repo copies), and nothing in the repo changed. **Output:** 10 habits grouped by the 4Ds (3 Delegation, 3 Description, 3 Discernment, 1 Diligence), each with a "why", a source and a Dojo example, plus an overview table and a 30-second recap. **Checked against the summaries:** every source and lesson number is correct (for example, AI Fluency L10's four-part feedback, L12's diligence, and Capabilities L4, L8–9, L10–11 and L12). Merging habits taught in several courses and crediting them as "also in" was a sensible call. **Discernment it got right:** it marked its own extrapolated Dojo examples as *(assumption)*, which is the habit from my "Instructions for Claude". **Small slip:** the habit 4 example names `TaskList.kt`. The real file is `TaskListScreen.kt`, but it flagged that as illustrative. **Scoping and plan:** yes. It asked scoping questions and showed its plan before writing anything, as Lesson 4 describes for a hand-off. The answers show in the file's header notes: Claude 101 limited to lessons 1–6, overlapping habits merged and credited as "also in", and practical habits rather than concepts. |
+| Code tab, Plan mode: did it stay read-only? | **Yes.** The working tree was clean and `HEAD` was `bc533a0` both before and after; nothing was edited, created or committed. It explored the repo by reading files and returned an accurate annotated tree. Compared with the Chat tab, it read the *real* files, not an attached copy, so it knew things the README doesn't say (three test classes, `libs.versions.toml`, `theme/Theme.kt`). Plan mode is the safe way to point Claude at a codebase you only want explained. |
+| Reflection: one whole task you've been feeding in question by question | **Recording the Day 1 chat exercise.** I ran three chats, then pasted each result separately, asked for each table to be filled in, asked for the reflections, and then asked for the deliverable to be ticked. That took about 8 turns and 4 commits for what was really one task. **As a hand-off, the outcome would be:** "Here are the transcripts of my three chats (v1 and v2 for each). Record them word for word in the worksheet, fill in the comparison rows, draft the reflection marked as drafts for me to edit, tick the Day 1 deliverable, and give me one commit command." That's multi-step and its finished output is files, so by the Lesson 4 test it's a hand-off. **What stays mine:** the "surprise" and "which change helped" judgments, which I'd review and edit rather than delegate. |
 
 ---
 
@@ -248,9 +342,36 @@ Read the three course summaries in this folder and produce one file, "day-1-stud
 
 | | Notes |
 |---|---|
-| Did Chat 1 cite the right summary? | |
-| Chat 2 result: did it know your previous chat? (Memory may blur this, so note whether Memory is on.) | |
-| What else would you add to this project's knowledge later? | |
+<details>
+<summary>Chat 1 answer: "Which habits from the three courses should I apply on Day 2, ticket analysis?"</summary>
+
+For Day 2 ticket analysis, I'd apply these habits. I'm assuming Day 2 means analyzing the seeded GitHub issues against Dojo Tasks; I didn't open the Day 2 phase file, so adjust if the scope differs.
+
+1. **Decide your part first (AI Fluency, Delegation).** Before pasting tickets, decide what you'll judge yourself, such as severity or whether something is really a bug, and what Claude should draft.
+2. **Give rich context and explicit rules (Claude 101 Lesson 2; AI Fluency Lesson 9).** State your role (Android dev on Dojo Tasks, Kotlin and Compose), the output format per ticket, and the rule "don't invent facts; mark assumptions."
+3. **Ask for reasoning before the verdict (AI Fluency Lesson 9).** Have it reason through each ticket before classifying it, so you can see where it goes wrong.
+4. **Treat specifics as suspect (AI Capabilities Lesson 4).** Confident tone doesn't mean accuracy. Verify line numbers, API names, versions and quoted behavior, since fabrication concentrates there.
+5. **Confirm against the app, not the prose (Claude 101 "How this applies"; README ground rules).** Reproduce the bug, or run the unit tests and logs, before accepting an analysis. Trust runs over fluent answers.
+6. **Keep the batch small (AI Capabilities Lesson 8).** Analyze tickets in small groups, put the key rules at the top and repeat them at the end, and start a fresh chat with a short summary if quality slips.
+7. **State the goal, not just the format (AI Capabilities Lesson 10).** Say what the analysis is for, such as choosing the next fix, because "make it shorter" style instructions get followed literally.
+8. **Give structured feedback, and don't cave to pushback (AI Fluency Lesson 10; AI Capabilities Lesson 3).** When you disagree, name the problem, say why, and suggest the fix. Change a classification only if you have evidence, not because it pushed back.
+
+Sources: the three Academy course pages; the summaries are in the Dojo Training project.
+
+</details>
+
+<details>
+<summary>Chat 2 answer: "What did I ask you in my last chat?"</summary>
+
+I can't see your earlier chats. In this session, the last thing you asked was which habits from the three courses to apply on Day 2 for ticket analysis, and I answered that from the Dojo Training project's course summaries. If you meant a different conversation, I can't retrieve it from here, so you'd need to open it in your chat history.
+
+</details>
+
+| | Notes |
+|---|---|
+| Did Chat 1 cite the right summary? | **Yes, and it followed the project instructions.** Every habit names its course and lesson, and I checked each one against the summaries: AI Fluency L9 has the "think first" technique and L10 the four-part feedback; Capabilities L3 has sycophancy, L4 next-token prediction and L10 steerability; Claude 101 L2 has the prompt framework. **One small mix-up:** habit 6's "repeat key rules at the end" is from Capabilities L9 (the Try-it-out page), not L8; L8 says to put important material at the top. **Instructions applied:** it marked its assumption about Day 2's scope ("I didn't open the Day 2 phase file") and stayed concise. **It reached beyond the summaries well:** habit 5 used the README's ground rule ("trust tests, runs and logs over fluent answers"), which is in the project knowledge too. |
+| Chat 2 result: did it know your previous chat? (Memory may blur this, so note whether Memory is on.) | **It said it couldn't see earlier chats, but then quoted Chat 1's question "in this session".** That means the question went into the *same* conversation as Chat 1, not a new chat, so it was reading its own history. It doesn't show that chats share context. **Redo:** in the project, click **New chat** first, then ask again. Expected: no knowledge of Chat 1, apart from anything Memory adds (Memory is on; chat search is off). **Redo, in a genuinely new chat:** "I can't see previous chats in this project." That confirms the lesson: **chats in a project share the knowledge files and instructions, not each other's history.** Memory didn't fill the gap either, because memory stores facts about me, not chat transcripts, and chat search is off. To carry something from one chat to the next, put it in the project knowledge. |
+| What else would you add to this project's knowledge later? | (1) **The Day 2 phase file**, since Chat 1 had to assume Day 2's scope. More generally, add each day's phase file before that day starts. (2) **The issue texts** (#3–#9, the reporter's words only) for ticket analysis. (3) **The Day 1 exercise worksheet**, so it can see which prompting habits I've already practised. **Keep out:** the Android source code, which belongs to Claude Code with the real repo, and anything with secrets. Keep the knowledge current: replace files when they change instead of piling up versions. |
 
 ---
 
@@ -271,16 +392,48 @@ Optionally, make an interactive artifact: "Build an interactive quiz with 8 ques
 
 Finally, open the **Artifacts** tab to confirm it's saved there. Check the **Share** options without sharing anything.
 
+<details>
+<summary>Final "Day 1 recap" artifact (after all three edits)</summary>
+
+```text
+Day 1 recap
+Nova · Dojo Claude Code training · Day 1 of 15
+
+Done
+- Passed the AI Fluency: Framework and foundations quiz (badge earned)
+- Passed the AI capabilities and limitations quiz (badge earned)
+- Claude 101 lessons 1–6 done, with hands-on practice for each
+- Day 1 chat exercise: 3 questions, thin vs. described prompts, with notes on what improved each answer
+- Git block done (branch, commit, push, PRs)
+
+Learned
+- AI Fluency: the 4Ds (Delegation, Description, Discernment, Diligence) and three modes (automation, augmentation, agency).
+- AI capabilities and limitations: the model predicts text, so fabrication concentrates in specifics like names, numbers and URLs. Verify those.
+- Claude 101: brief Claude with stage, task and rules, then iterate. Projects hold knowledge, skills hold procedures, artifacts are the outputs.
+
+Next
+- Day 2: Claude 101 lessons 7–13, then the quiz and badge.
+- Training repo on GitHub (link)
+
+Assumption: Day 2 scope is taken from the Claude 101 course summary (lessons 7–13, quiz, badge).
+```
+
+</details>
+
+**Checking the recap:**
+- **It meets the brief.** It has all three sections, uses exactly the five "Done" facts I gave it (no invented progress), gives one "Learned" bullet per course with the right content for each, adds the repo link under Next, and comes to 156 words, under the 200 limit.
+- **The "Next" section is incomplete.** Day 2 is mainly ticket analysis, reproducing a seeded bug and Git conflict practice, with Claude 101 lessons 7–13 only as the course part. The project knowledge doesn't include the Day 2 phase file, so it built "Next" from the only source it had (the Claude 101 summary). **It also flagged that as an assumption**, which is exactly how I caught it. This is the Lesson 5 note in action: add the Day 2 phase file to the project knowledge. Fix before sending: "Next: Day 2: analyse 5 backlog tickets, reproduce the seeded bug with repro steps and a failing test, resolve merge conflict #1; finish Claude 101."
+
 | | Notes |
 |---|---|
-| Artifact type you got (Doc, or a plain artifact) | |
-| Edit vs. comment vs. ask: which was fastest for what? | |
-| Share options available on your plan | |
+| Artifact type you got (Doc, or a plain artifact) | **A plain artifact**, not a Claude Doc. "Create an artifact: a one-page doc" was read as "make an artifact", so it didn't use the Claude Docs experience. To get a living Doc, ask for one by name ("Create this as a Claude Doc") or start from the Artifacts tab and pick *Doc*. On Team or Enterprise, an admin may have turned Docs off. **Lesson:** the wording of the request picks the tool, which is the "ask for the deliverable" tip in practice. |
+| Edit vs. comment vs. ask: which was fastest for what? | **Asking was the only way that applied.** Per Lesson 6, editing directly and commenting for Claude belong to Design, Slides and Docs, so a plain artifact only changes when you ask in the chat. Asking worked well: "add a one-line repo link under Next" landed in one pass. For small fixes like a typo, a Doc's direct editing would be faster than asking and waiting for a rewrite. |
+| Share options available on your plan | **Private** or **Anyone with the link**, the Pro/Max choice from Lesson 6, with no per-person or organization-only options. Only the artifact is shared, never the chat. Recap link: https://claude.ai/artifact/2xFLQ3sGdtR2pvtRkRsfhN. It only opens for others if set to "Anyone with the link"; switch it back to Private if you only meant to look. |
 
 ---
 
 ## Wrap-up
 
-- Lessons done (tick them in the Day 1 plan, or tell Claude Code): 1 ☑ 2 ☑ 3 ☑ 4 ☐ 5 ☐ 6 ☐
+- Lessons done (tick them in the Day 1 plan, or tell Claude Code): 1 ☑ 2 ☑ 3 ☑ 4 ☑ 5 ☑ 6 ☑
 - One feature you'll keep using from tomorrow:
 - One thing that didn't work as the lesson described:
