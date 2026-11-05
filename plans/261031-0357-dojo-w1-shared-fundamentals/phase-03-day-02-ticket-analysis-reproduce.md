@@ -1,6 +1,6 @@
 ---
 title: "Phase 3: Day 2: Ticket Analysis, Reproduce & Understand"
-status: todo
+status: in-progress
 ---
 
 # Phase 3: Day 2: Ticket Analysis, Reproduce & Understand
@@ -13,12 +13,12 @@ Source: [day-02.html](https://dojo.agilityio.dev/schedule/day-02.html)
 
 ## Todo
 
-- [ ] Morning: 3-sentence analysis (what is asked, what is ambiguous, first step) for 5 backlog tickets
+- [x] Morning: 3-sentence analysis (what is asked, what is ambiguous, first step) for 5 backlog tickets
 - [ ] Use Claude to find gaps and draft clarifying questions; compare with an independent analysis from a fresh Claude session (solo stand-in for a partner)
-- [ ] Afternoon: set up the app from a clean clone, reproduce the seeded bug
-- [ ] Write exact repro steps (steps, expected, actual, environment) into the GitHub issue
-- [ ] Paste stack trace/code into Claude, get hypotheses, verify each by running
-- [ ] Git block: `git pull --rebase`, read `git log` / `git diff`, resolve seeded merge conflict #1
+- [x] Afternoon: set up the app from a clean clone, reproduce the seeded bug
+- [x] Write exact repro steps (steps, expected, actual, environment) into the GitHub issue
+- [x] Paste stack trace/code into Claude, get hypotheses, verify each by running
+- [x] Git block: `git pull --rebase`, read `git log` / `git diff`, resolve seeded merge conflict #1
 - [ ] Course: finish [Claude 101](https://academy.claude.com/courses/claude-101) (lessons 1–6 are on Day 1)
   - [ ] 7. [Working with skills](https://academy.claude.com/courses/claude-101/working-with-skills)
   - [ ] 8. [Connecting your tools](https://academy.claude.com/courses/claude-101/connecting-your-tools)
@@ -35,12 +35,14 @@ Write the questions you'd ask the reporter; role-play with Claude as the reporte
 
 ## Deliverables
 
-- [ ] 5 ticket analyses + clarifying questions
-- [ ] Repro steps in the seeded bug issue
-- [ ] Failing test on a branch
-- [ ] Conflict #1 resolved
+- [x] 5 ticket analyses + clarifying questions
+- [x] Repro steps in the seeded bug issue
+- [x] Failing test on a branch
+- [x] Conflict #1 resolved
 
 ## Notes / Skills
+
+- Progress log: [exercise-261105-2255-day-02-ticket-analysis.md](../reports/exercise-261105-2255-day-02-ticket-analysis.md). Target bug #3. The failing test is on `day-2-issue-3-overdue-repro` and conflict #1 was resolved on `day-2-conflict-1-practice`. Still open: the partner comparison and Claude 101 lessons 7–13.
 
 Bar: a dev can reproduce from the report alone without asking.
 
