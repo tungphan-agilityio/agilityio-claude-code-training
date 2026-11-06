@@ -159,26 +159,37 @@ You are a developer on "Dojo Tasks", a small Android to-do app (Kotlin, Compose)
 #9 Make the list less confusing: "The list order is confusing to me. Not sure what goes where. Can it be clearer?"
 ```
 
+Run on 2026-11-06 in a fresh Claude agent with no repo access and no context from this session, using the prompt above.
+
 | Ticket | Questions only the partner asked | Questions only I asked | Who had the better first step? |
 |---|---|---|---|
-| #3 | | | |
-| #4 | | | |
-| #5 | | | |
-| #7 | | | |
-| #9 | | | |
+| #3 | Does the due date include a time, or is it date-only? (midnight granularity) | Was it due *today*? Did the label clear the next day? One task or all? | **Mine.** "Make a task due today and one due tomorrow" tests the boundary in a minute. The partner's "inspect the overdue logic" is right but less targeted. |
+| #4 | Does the copy keep the same notes, due date and done flag? | Which copy kept the new title? Does it happen if only notes or the date change? | **Tie.** Both trace the save path by id. The partner also named a hypothesis (`add` used instead of update). |
+| #5 | Could it be linked to #4 (a blank copy after an edit)? Quick-add or full form? | Was any error shown? Can you reproduce it, and what did you type? | **Mine** for speed (save a title of only spaces). The partner's link to #4 is a good idea I missed. |
+| #7 | Did persistence ever work before? Close and reopen, or also backgrounding? | Should done tasks be remembered? Show sample tasks only on first run? Is local-only OK? | **Tie.** Both say to confirm scope with the product owner first. My questions shape acceptance criteria. Theirs separate a bug from a feature. |
+| #9 | Is the problem sort order, grouping or labels? Small list or long list? | Can you send a screenshot? Would headers help? Is it linked to #3? | **Tie.** Both say to document the current sort, then ask. Mine links it to #3, which may be the real cause. |
+
+**Takeaways**
+- The partner flagged the #4/#5 shared-root-cause idea and the date-vs-date-time question. I'll add both to the reporter questions next time.
+- My first steps were more concrete, because I had seen that dates are `LocalDate` and where the sort rule lives. The cold analysis couldn't know that. A partner without code access asks broader questions.
+- The partner didn't keep to "exactly 3 sentences": it added "Assumption" sentences on 4 tickets. It did mark them as assumptions, as asked.
 
 ### 5b. Reporter role-play (#3)
 Open a new chat and paste the prompt below, then ask the #3 questions from section 1 one at a time.
 ```text
 Role-play the non-technical user who filed this bug in a to-do app: "I was looking at my list this morning and a task showed up in red as Overdue, but I'm pretty sure I'm not late on it yet." Facts you know: the task was due today; your phone's date and time zone are correct; you haven't travelled. Answer my questions briefly, like a real user. Don't volunteer technical guesses.
 ```
+Run on 2026-11-06 in a fresh Claude agent with no repo access, playing the reporter. All five questions were sent in one message, not one at a time.
+
 | Question | Reporter's answer | Did it change the repro? |
 |---|---|---|
-| 1 | | |
-| 2 | | |
-| 3 | | |
-| 4 | | |
-| 5 | | |
+| 1. Due date vs phone date? | Both were today. | No. It confirms the "due today" case we reproduced. |
+| 2. Due today or later? | Due today. | No. It rules out a later-date case, so the boundary is the only suspect. |
+| 3. Did the label clear the next day? | It stayed red for the rest of that day. They didn't check the next day. | No. It is still unknown whether it clears, but the test pins the rule, so this doesn't matter. |
+| 4. Time zone change or travel? | No. | No. It matches H2 being ruled out. |
+| 5. One task or every task due that day? | "Only that one task; others due today looked normal." | **Contradicted by the repro.** On the emulator every not-done task due today shows Overdue. The other tasks were likely done or not due today. Trust the run over the report. |
+
+**Takeaway.** The answers fit the reproduced cause, apart from Q5. Q5 shows that a reporter's detail can be wrong, and it is the reason the repro steps rely on what we observed rather than on what the reporter said.
 
 ### 5c. Claude 101 lessons 7–13
 | Lesson | One takeaway | One thing to try in this repo |
