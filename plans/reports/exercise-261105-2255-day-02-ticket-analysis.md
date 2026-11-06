@@ -192,15 +192,17 @@ Run on 2026-11-06 in a fresh Claude agent with no repo access, playing the repor
 **Takeaway.** The answers fit the reproduced cause, apart from Q5. Q5 shows that a reporter's detail can be wrong, and it is the reason the repro steps rely on what we observed rather than on what the reporter said.
 
 ### 5c. Claude 101 lessons 7–13
+Drafted from [course-summary-261101-2107-claude-101.md](course-summary-261101-2107-claude-101.md). Check each row against the lesson as you take it, and rewrite it in your own words where it differs.
+
 | Lesson | One takeaway | One thing to try in this repo |
 |---|---|---|
-| 7. Working with skills | | |
-| 8. Connecting your tools | | |
-| 9. Enterprise search | | |
-| 10. Research mode | | |
-| 11. Use-cases by role | | |
-| 12. Other ways to work with Claude | | |
-| 13. What's next | | |
+| 7. Working with skills | Projects hold the *what* (knowledge) and skills hold the *how* (a repeatable procedure). Skills can run code, so read any external skill before installing it. | Turn today's repro format (steps, expected, actual, environment, frequency, failing test) into a "bug-repro" skill. The real version is Day 7 work in `.claude/`. |
+| 8. Connecting your tools | Connectors (MCP) give Claude somewhere to look, so you don't have to paste copies. Claude sees only what you can see, and you can revoke access at any time. | Ask Claude to read issue #3 and its comments through the GitHub connector instead of pasting the text. This previews Day 8. |
+| 9. Enterprise search | "Ask {Org}" searches company docs, chat and email and always cites its sources. It is Team and Enterprise only. | Not available on a solo plan. Instead, note what you would ask it at work ("Has anyone fixed a date-boundary bug before?"). |
+| 10. Research mode | Research is for multi-source reports with citations and takes minutes. Use web search for quick facts and Thinking for reasoning such as debugging. | Pick the right tool for #7: Research "Room vs DataStore for a small Compose to-do app" with clear sections, but use Thinking, not Research, for the #3 boundary bug. |
+| 11. Use-cases by role | The gallery shows the same pattern for every role: bring real context, ask for a specific output, check it. | Try the "patterns in user feedback" use case on the 7 backlog issues. Do #3 and #9 cluster together? |
+| 12. Other ways to work with Claude | Match the tool to the work. Claude Code is for building, debugging, codebases and chores like merge conflicts. Claude in Chrome is for low-risk browser flows on trusted sites. | Today's conflict #1 and the failing test were Claude Code chores. Write down which of today's steps would have suited claude.ai chat instead (ticket analysis, role-play). |
+| 13. What's next | Start simple: pick one recurring task this week, try it, iterate. "The rest comes from doing the work." | Pick Day 3's PR description as the recurring task: draft it with Claude, then hand-edit, as the Day 3 phase file says. |
 | Quiz score / badge | | |
 
 ---
