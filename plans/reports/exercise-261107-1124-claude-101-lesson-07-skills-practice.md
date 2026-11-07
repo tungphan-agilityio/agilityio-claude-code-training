@@ -47,6 +47,18 @@ Make an Excel file listing these backlog tickets from a to-do app, with columns:
 | Ask for a change ("sort by priority"). Did it edit the file, or give you a *new* version? | Not done yet. |
 | Compared with run 1 | It lists its assumptions up front ("I only had the ticket titles"), which is better calibrated. **It made the same #7 miss:** "sounds like a persistence bug, so you may want to re-type it". Two runs without product context gave the same wrong guess, so it's a context gap, not chance. Lesson 3's fix still applies: add one line saying the app keeps data in memory by design. |
 
+**Run 3 (2026-11-07): new chat, with a product-context line, a request to name the skill, then "Sort the rows by priority, P1 first."** It ran in a local Claude session with the `anthropic-skills:xlsx` plugin skill and saved `backlog_triage.xlsx` into the repo root, so this isn't the claude.ai web sandbox.
+
+| | Notes |
+|---|---|
+| Which skill did Claude name in its reasoning? | **`anthropic-skills:xlsx`.** The reply and the tool steps agree that it was loaded before the build. The skill told it to write the workbook with openpyxl and check it by reloading. It skipped the skill's LibreOffice recalc step because there are no formulas, and it said so. **The lesson point is confirmed:** the built-in skill loaded by itself and was named. |
+| Did you get a real `.xlsx` file (frozen header, filter on)? | **Yes, checked independently** by unzipping the file. It has `A1:E8` (a header plus 7 rows), a frozen pane below row 1 and a filter on `A1:E8`. Claude's own check only read the saved settings, and it said it couldn't see the view. |
+| Ask for a change ("sort by priority"). Did it edit the file, or give you a *new* version? | **It overwrote the same file** and didn't create a new link. **This differs from the lesson,** which says claude.ai returns a *new* version. The difference is the environment: a local session writes to your folder, while claude.ai's sandbox hands back new files. The sort is correct: #4 (P1), then #3 and #5 (P2), then #6–#9 (P3), with the original order kept within each priority. |
+| Did the context line fix #7? | **Yes.** #7 stays an enhancement at P3: "Not a bug: tasks are in-memory by design and saving between launches is an unbuilt feature." That's one line of context fixing the miss from runs 1 and 2, the same result as lesson 3. |
+| Anything still off? | **#8's reason** is "the overdue label already exists". It misses that #8 depends on #3's broken boundary, which run 1 caught. |
+
+**Part A result:** done. The skill loaded by itself and was named, and the file was checked by unzipping it. The "new version vs overwrite" difference depends on the environment, so redo that one check in the claude.ai web app if you want to see the lesson's behavior exactly.
+
 **Content check (the lesson 3 habit):**
 - **#7 at P1, "probably a bug in practice", is the same miss as lesson 3 run 1.** The README says data lives in memory and resets on restart *by design*, so #7 is a feature request. It may still deserve high priority, but not because it's a bug. Claude kept the Type column as given, then argued against it in its reasoning. Give it the product context and the rating should change.
 - **#8 "depends on #3 being correct" is a good catch.** An overdue count in the header would repeat #3's wrong boundary, so fix #3 first.
