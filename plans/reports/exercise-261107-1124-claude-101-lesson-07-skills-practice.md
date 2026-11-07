@@ -38,6 +38,15 @@ Make an Excel file listing these backlog tickets from a to-do app, with columns:
 | Did you get a real `.xlsx` file (frozen header, filter on)? | **Yes, checked independently** by unzipping the file. It has 1 header row plus 7 rows (`A1:E8`), a frozen pane below row 1 (`ySplit="1"`, `state="frozen"`) and an auto-filter on `A1:E8`. Claude also said what it had *not* checked ("I haven't opened it in Excel itself"). That's the honest verification habit from lesson 3. |
 | Ask for a change ("sort by priority"). Did it edit the file, or give you a *new* version? | Not done yet. Ask it in the claude.ai re-run. |
 
+**Run 2 (2026-11-07): claude.ai chat, new conversation, same prompt.**
+
+| | Notes |
+|---|---|
+| Which skill did Claude name in its reasoning? | **Check the reasoning panel.** The reply itself doesn't name a skill. But the output path `/mnt/user-data/outputs/backlog_tickets.xlsx` is claude.ai's sandbox, so code execution and file creation ran there. Expand Claude's reasoning or tool steps and look for the xlsx skill being read. |
+| Did you get a real `.xlsx` file (frozen header, filter on)? | Claude says it made one sheet, "Backlog", with a bold header row, the header frozen and a filter on all columns. **Open the download in Excel or Numbers to confirm.** Run 1 was checked by unzipping the file, but this one hasn't been checked. |
+| Ask for a change ("sort by priority"). Did it edit the file, or give you a *new* version? | Not done yet. |
+| Compared with run 1 | It lists its assumptions up front ("I only had the ticket titles"), which is better calibrated. **It made the same #7 miss:** "sounds like a persistence bug, so you may want to re-type it". Two runs without product context gave the same wrong guess, so it's a context gap, not chance. Lesson 3's fix still applies: add one line saying the app keeps data in memory by design. |
+
 **Content check (the lesson 3 habit):**
 - **#7 at P1, "probably a bug in practice", is the same miss as lesson 3 run 1.** The README says data lives in memory and resets on restart *by design*, so #7 is a feature request. It may still deserve high priority, but not because it's a bug. Claude kept the Type column as given, then argued against it in its reasoning. Give it the product context and the rating should change.
 - **#8 "depends on #3 being correct" is a good catch.** An overdue count in the header would repeat #3's wrong boundary, so fix #3 first.
