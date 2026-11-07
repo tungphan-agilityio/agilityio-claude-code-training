@@ -102,8 +102,8 @@ Interview me about anything else you need before writing the skill.
 
 | | Notes |
 |---|---|
-| Questions Claude asked in the interview (list them) | |
-| Anything it asked that you hadn't thought of? | |
+| Questions Claude asked in the interview (list them) | 9 questions, each with a default in brackets: (1) where it runs: Claude Code `.claude/skills/` or claude.ai; (2) Android or iOS too; (3) inputs: text, screenshots, logs, Crashlytics; (4) preconditions as step 1 or in Environment; (5) should it ever write the failing test; (6) multiple bugs in one report: split or flag; (7) output format and whether the 250-word limit covers everything; (8) language and PII redaction; (9) 2–3 real reports to test with. |
+| Anything it asked that you hadn't thought of? | **Preconditions** (fresh install or existing data), **multiple bugs in one report**, **PII redaction** and **non-English reports**. All four are now rules. **Q1 shaped "verified":** on claude.ai the skill can't run anything, so "verified by running" is allowed only when I paste the test or run output. **Q9 test set:** I gave it #3 as the gold example and #4 as a test case, and kept #5 back for Part C's missing-information test so the eval isn't contaminated. I also overrode the default "Claude Code `.claude/skills/`" to claude.ai, because the team skill is Day 7 work. |
 | After reading the saved skill: does it contain all 8 sections and the "never invent" rule? Any executable code? | |
 | Where does it live, and is it private? | |
 
