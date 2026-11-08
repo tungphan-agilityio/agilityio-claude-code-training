@@ -94,7 +94,7 @@ Expected: run 1 should say it can't access GitHub, and might suggest pasting the
 | Named its source | ✅ "The public issues page", after the API was rate-limited. |
 | Anything made up? | ✅ Nothing. |
 | Did it actually use Chrome? | **Unclear.** "Rate-limited, so I read the public issues page" may be claude.ai's own web access again, as in run 1. Check the tool steps for Chrome actions (opening a tab, reading the page). |
-| Follow-up ("Compare that with pasting…") in the same chat | Not done yet. |
+| Follow-up ("Compare that with pasting…") in the same chat | ✅ **As expected:** "a pasted copy… would be a snapshot, and it would go stale." It listed what would be missing: new comments, edits, label and state changes, the other issues (a paste covers only one), and live branch or test status. **It went past the expected answer** on the trade-off: a paste is better for exact text from a private issue or a snapshot at a fixed time, and a fetch is better for current state. It noted its own fetch came from the public page after the API rate limit. |
 
 **Lesson point found:** an answer can come from several sources (Chrome, claude.ai's web or sandbox, memory, pasted text). Turning one source off doesn't turn off the others, so check which tools are on before trusting a "connector off" result.
 
