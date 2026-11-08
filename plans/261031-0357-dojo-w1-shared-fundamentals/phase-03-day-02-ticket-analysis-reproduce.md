@@ -21,7 +21,7 @@ Source: [day-02.html](https://dojo.agilityio.dev/schedule/day-02.html)
 - [x] Git block: `git pull --rebase`, read `git log` / `git diff`, resolve seeded merge conflict #1
 - [ ] Course: finish [Claude 101](https://academy.claude.com/courses/claude-101) (lessons 1–6 are on Day 1)
   - [x] 7. [Working with skills](https://academy.claude.com/courses/claude-101/working-with-skills)
-  - [ ] 8. [Connecting your tools](https://academy.claude.com/courses/claude-101/connecting-your-tools)
+  - [x] 8. [Connecting your tools](https://academy.claude.com/courses/claude-101/connecting-your-tools)
   - [ ] 9. [Enterprise search](https://academy.claude.com/courses/claude-101/enterprise-search)
   - [ ] 10. [Research mode for deep dives](https://academy.claude.com/courses/claude-101/research-mode-for-deep-dives)
   - [ ] 11. [Claude in action: use-cases by role](https://academy.claude.com/courses/claude-101/claude-in-action-use-cases-by-role)

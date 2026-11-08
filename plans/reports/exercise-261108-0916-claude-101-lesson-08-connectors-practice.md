@@ -171,7 +171,7 @@ Drafted from what Parts A–C showed. Confirm or change each row.
 
 ## Wrap-up
 
-- Lesson 8 done (tick it in the Day 2 phase file, or tell Claude Code): ☐
-- Does the lesson 8 takeaway in the [Day 2 sheet](exercise-261105-2255-day-02-ticket-analysis.md) still match? Rewrite it if not.
-- One thing the connector got wrong, or one place where it said "I can't see that" honestly:
-- Day 8 sets up GitHub MCP in Claude Code. What would you allow it to do without asking, and what not?
+- Lesson 8 done (tick it in the Day 2 phase file, or tell Claude Code): ☑ (C3, the revoke step, was optional and skipped)
+- Does the lesson 8 takeaway in the [Day 2 sheet](exercise-261105-2255-day-02-ticket-analysis.md) still match? **Partly, so I rewrote it:** turning one source off doesn't turn the others off, and Claude picks which tool to use, so check the steps.
+- One honest "I can't see that": **C2: "This session doesn't have GitHub access to that repository."** It also refused to go looking for other people's private repos. **One thing it got wrong:** in Part B run 1 it offered to take a GitHub token in chat.
+- Day 8 GitHub MCP: **allow without asking:** reading issues, PRs, comments and CI runs on this repo. **Always ask:** commenting, labelling, pushing, merging, closing, and anything that touches workflows or settings.
