@@ -70,6 +70,23 @@ In the repo tungphan-agilityio/agilityio-claude-code-training, which open issues
 
 Expected: run 1 should say it can't access GitHub, and might suggest pasting the text. If it lists issues anyway, that's an invented answer, and an important thing to record. Run 2 should get #6 and #8 right and summarize the #3 repro.
 
+**Results (2026-11-08)**
+
+*Run 1, Chrome off.* **Chrome off didn't mean "no outside access".** Claude still reached GitHub through claude.ai's own sandbox (it mentioned "GitHub's API is rate-limiting this container"), probably web fetch or code execution.
+
+| Check | Result |
+|---|---|
+| Said it couldn't see the repo, instead of guessing? | ⚠️ It *could* partly see it. It said **"I can't yet tell you which open issues have no comments"** and didn't guess. |
+| No comments on **#6 and #8**? | Not answered (rate-limited). No invented list. ✅ for honesty |
+| #3 summary matches the known answer | ✅ Pixel 9 Pro emulator, Android 16 / API 36, `main` @ `e113532`, `TaskRulesTest > task due today is not overdue` on `day-2-issue-3-overdue-repro`, 1 of 23 failing, the reporter questions. |
+| Named its source | ✅ The comment's author and date. |
+| Anything made up? | ⚠️ "Likely cause (assumption, verified by running the test)" is a self-contradicting label. The comment says "checked by running". It blended two labels instead of quoting. |
+| **Security flag** | ❌ "Give me a GitHub token and I can query it directly." **Never paste a token into chat.** It stays in the conversation history. That's exactly the scoped, revocable access a connector exists to replace. |
+
+*Run 2, Chrome on.* **The wrong prompt was sent:** the follow-up ("Compare that with pasting…") went into a *new* chat, not the Part B prompt, so Chrome was never used. It answered from **claude.ai memory** ("my notes on Dojo Tasks… but not individual issues"). **That revealed one more source:** memory keeps short facts across chats, but not issue contents. It said honestly that it didn't have #3. **Redo:** in a new chat with Chrome on, send the main Part B prompt, then the follow-up *in the same chat*.
+
+**Lesson point found:** an answer can come from several sources (Chrome, claude.ai's web or sandbox, memory, pasted text). Turning one source off doesn't turn off the others, so check which tools are on before trusting a "connector off" result.
+
 **Then ask, in the run 2 chat:**
 
 ```text
