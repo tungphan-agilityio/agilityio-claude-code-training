@@ -209,6 +209,8 @@ Read the saved skill again, then re-run **only #5** in a new chat. Pass if the q
 - **Q5 ("could the task have come from somewhere else?")** keeps the #4 duplicate-on-edit path open. That's the link the partner analysis flagged on Day 2.
 - **The steps are now a *suggested* path, not a known one.** Steps 3–5 are plausible actions, each marked unknown. A developer can't reproduce from this yet, and the report says so honestly. It becomes a real repro once the reporter answers Q3–Q5.
 
+**Skill version:** Customize > Skills shows `bug-repro-report` v2, updated about 8 minutes before the re-run, so the re-run used the edited skill.
+
 **Lesson 7 loop done:** create → test (2 runs) → edit → re-test (pass).
 
 If either run fails a check, **iterate**. Ask Claude to edit the skill (for example, "Update bug-repro-report: if no steps are given, never write steps, ask instead"), save it, re-read it, and re-run the failing case in a new chat.
