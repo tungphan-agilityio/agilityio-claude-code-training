@@ -221,12 +221,16 @@ If either run fails a check, **iterate**. Ask Claude to edit the skill (for exam
 
 Lesson point: projects hold the *what* (knowledge), skills hold the *how* (a procedure).
 
+Drafted from this session's evidence. Confirm or change each row.
+
 | Thing | Project knowledge or skill? | Why |
 |---|---|---|
-| The README and the Day 2 phase file | | |
-| "How we write a repro" (the 8 sections) | | |
-| The list of open backlog issues | | |
-| "How we review a PR" (the Day 3 checklist order) | | |
+| The README and the Day 2 phase file | **Project knowledge** | These are facts about *this* app and plan. Part A showed why it matters: without the README's "in memory by design", Claude called #7 a bug in runs 1 and 2. One line of that context fixed it in run 3. |
+| "How we write a repro" (the 8 sections) | **Skill** | It's a procedure that works on any ticket and any app. Built as `bug-repro-report` and loaded by itself in Part C from "Write up this bug report". |
+| The list of open backlog issues | **Neither: a connector** (lesson 8) | It changes all the time. I posted comments on #3–#9 on Day 2, so an uploaded copy would already be out of date. A GitHub connector reads the live issues. |
+| "How we review a PR" (the Day 3 checklist order) | **Skill** | It's a procedure (correctness, tests, readability, security basics, scope) that applies to every PR. On Day 7 it becomes a team skill in `.claude/`, which is the project-level version from interview Q1. |
+
+**Combined:** the skill brings the *how* and the project brings the *what*. A repro written with `bug-repro-report` inside a Dojo Tasks project would know that dates are `LocalDate` and that storage is in memory, so it would ask fewer generic questions.
 
 <details>
 <summary>Suggested answers</summary>
