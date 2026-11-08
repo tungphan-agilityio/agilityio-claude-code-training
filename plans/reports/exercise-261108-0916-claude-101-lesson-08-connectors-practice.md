@@ -48,6 +48,8 @@ Can you access my GitHub? List the repositories you can see, and tell me which a
 
 ## Part B: paste vs point, with a known answer
 
+> **Source for Parts B and C: Claude in Chrome** (decided 2026-11-08, because claude.ai chat has no GitHub connector, as Part A run 2 found). Chrome reads github.com through your logged-in browser, so it **acts as you, with full write access**. Decline every action it proposes. "Connector off/on" below means turning **Claude in Chrome** off or on in the chat's tools menu.
+
 Lesson point: a connection only gives a request *somewhere to point*. You still have to ask, and the source has to be turned on.
 
 **Run 1, connector off.** In a **new chat**, turn GitHub off under **+ > Connectors** (or the tools menu), then paste:
@@ -102,6 +104,7 @@ List the open issues in the repository tungphan-agilityio/this-repo-does-not-exi
 | | Notes |
 |---|---|
 | Did it say it can't find or access them, instead of making up issues? | |
+| With Chrome: did it open the URLs and report GitHub's 404 page, or did it answer without looking? (GitHub shows 404 both for a repo that doesn't exist and for a private repo you can't see, so it **can't tell the two apart**. Did it say so?) | |
 
 **C3, revoke (optional).** Under **Customize > Connectors**, check where you'd change permissions or disconnect GitHub. You don't have to do it; just note where it is.
 
