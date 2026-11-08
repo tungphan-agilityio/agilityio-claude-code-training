@@ -156,14 +156,16 @@ What I found: on a clean clone of main (e113532), Pixel_9_Pro emulator, Android 
 
 Compare with your posted #3 comment, which is the known answer:
 
+Run 1 result (2026-11-08): full output kept in the chat. The notes below compare it with the [posted #3 comment](https://github.com/tungphan-agilityio/agilityio-claude-code-training/issues/3#issuecomment-6662720301).
+
 | Check | Pass? | Notes |
 |---|---|---|
-| Did the skill load by itself? (Is it named in the reasoning?) | | |
-| All 8 sections, in order | | |
-| Exact dates in yyyy-mm-dd in the steps | | |
-| Cause labelled "verified by running" | | |
-| Didn't invent anything (app version, extra devices, a fix) | | |
-| Under 250 words | | |
+| Did the skill load by itself? (Is it named in the reasoning?) | Likely | The output matches the skill's template exactly (`###` headings, `Unknown – ask reporter` with an en dash, the environment split). **Confirm in the chat's steps** that `bug-repro-report` was loaded. |
+| All 8 sections, in order | ✅ | Title, Steps, Expected vs Actual, Frequency, Environment, Failing test, Likely cause, Questions. |
+| Exact dates in yyyy-mm-dd in the steps | ✅ | 2026-11-04, 2026-11-05 and 2026-11-06, plus the time zone Asia/Ho_Chi_Minh. |
+| Cause labelled "verified by running" | ❌, but **the skill is right** | It said **Unverified**, "no test output pasted", as predicted in Part B. My prompt only *claimed* "confirmed by the test" and didn't paste the output, and rule 3 rightly refuses a claim as proof. My posted comment ("checked by running") is the weaker one here: the failing test shows the symptom, and only Day 3's fix turning the test green proves the cause. **The checklist was wrong, not the skill.** |
+| Didn't invent anything (app version, extra devices, a fix) | ✅ | No fix and no invented versions. **It did better than my comment** by keeping the developer's repro environment separate from the reporter's, and marking the reporter's model, Android version and app version as unknown. My comment didn't flag those. **Weak spot:** step 3, "Have tasks due 2026-11-04, -05 and -06", is a state, not an action. Mine says how: the sample data on first launch, or tap **+** and enter a date. |
+| Under 250 words | ✅ | 220 words. |
 
 **Run 2, new ticket with gaps (#5).** In a **new chat**, give it only the raw report:
 
@@ -173,11 +175,25 @@ Write up this bug report for the developers.
 Reporter: "There's an empty row in my task list with no title. I don't remember adding it. Maybe I hit Save by accident? I thought the app didn't let you save without a title."
 ```
 
+Run 2 result (2026-11-08): 231 words.
+
 | Check | Pass? | Notes |
 |---|---|---|
-| Unknown sections say "Unknown – ask reporter" instead of made-up steps | | |
-| The questions cover how the row appeared (spaces in the title? an error shown? can it be repeated?) | | |
-| Likely cause, if given, is labelled "unverified" | | |
+| Unknown sections say "Unknown – ask reporter" instead of made-up steps | ✅ | Preconditions, frequency and environment are all marked unknown. It didn't make up a creation path: it said "How the untitled task was created: Unknown – ask reporter". Time zone is correctly "Not applicable". |
+| The questions cover how the row appeared (spaces in the title? an error shown? can it be repeated?) | ⚠️ Partly | It covers "can it be repeated" (Q2) and "what did you do just before" (Q1). **It misses the two most useful questions:** whether the title was empty or only spaces, and whether an error message appeared. Those are what separate "validation skipped" from "spaces get through validation". |
+| Likely cause, if given, is labelled "unverified" | ✅ | **Unverified**, but "(e.g. accidental Save tap)" just repeats the reporter's guess as if it were a cause. |
+
+**Iteration (to do).** Send in claude.ai:
+
+```text
+Update bug-repro-report:
+1. Steps must be concrete user actions ("Tap +", "Enter title X", "Set due date 2026-11-05"), never a state like "Have tasks due …". If the action isn't known, mark it Unknown – ask reporter.
+2. When the reporter expected the app to block something (e.g. "I thought it didn't let you save without a title"), always ask exactly what they entered and whether any error or message appeared.
+3. Don't repeat the reporter's guesses as the likely cause.
+4. Add the rule "Don't propose a fix." and change the example's time zone to Europe/Berlin.
+```
+
+Read the saved skill again, then re-run **only #5** in a new chat. Pass if the questions now ask about empty vs spaces and an error message. Leave #3's cause label as Unverified, because that's correct.
 
 If either run fails a check, **iterate**. Ask Claude to edit the skill (for example, "Update bug-repro-report: if no steps are given, never write steps, ask instead"), save it, re-read it, and re-run the failing case in a new chat.
 
