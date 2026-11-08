@@ -160,7 +160,7 @@ Run 1 result (2026-11-08): full output kept in the chat. The notes below compare
 
 | Check | Pass? | Notes |
 |---|---|---|
-| Did the skill load by itself? (Is it named in the reasoning?) | Likely | The output matches the skill's template exactly (`###` headings, `Unknown – ask reporter` with an en dash, the environment split). **Confirm in the chat's steps** that `bug-repro-report` was loaded. |
+| Did the skill load by itself? (Is it named in the reasoning?) | ✅ | **Confirmed in the chat's steps:** "Reading the bug-report skill instructions first." The prompt never mentioned the skill. It loaded because its description matched "Write up this bug report", which is the lesson's main point about custom skills. |
 | All 8 sections, in order | ✅ | Title, Steps, Expected vs Actual, Frequency, Environment, Failing test, Likely cause, Questions. |
 | Exact dates in yyyy-mm-dd in the steps | ✅ | 2026-11-04, 2026-11-05 and 2026-11-06, plus the time zone Asia/Ho_Chi_Minh. |
 | Cause labelled "verified by running" | ❌, but **the skill is right** | It said **Unverified**, "no test output pasted", as predicted in Part B. My prompt only *claimed* "confirmed by the test" and didn't paste the output, and rule 3 rightly refuses a claim as proof. My posted comment ("checked by running") is the weaker one here: the failing test shows the symptom, and only Day 3's fix turning the test green proves the cause. **The checklist was wrong, not the skill.** |
