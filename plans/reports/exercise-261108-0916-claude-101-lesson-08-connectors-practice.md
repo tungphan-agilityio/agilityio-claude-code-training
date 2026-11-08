@@ -85,6 +85,17 @@ Expected: run 1 should say it can't access GitHub, and might suggest pasting the
 
 *Run 2, Chrome on.* **The wrong prompt was sent:** the follow-up ("Compare that with pasting…") went into a *new* chat, not the Part B prompt, so Chrome was never used. It answered from **claude.ai memory** ("my notes on Dojo Tasks… but not individual issues"). **That revealed one more source:** memory keeps short facts across chats, but not issue contents. It said honestly that it didn't have #3. **Redo:** in a new chat with Chrome on, send the main Part B prompt, then the follow-up *in the same chat*.
 
+*Run 2 redo, Chrome on, main prompt.*
+
+| Check | Result |
+|---|---|
+| No comments on **#6 and #8**? | ✅ Correct. **But for a weak reason,** which it flagged itself: "their comment count was missing from the page data, not because I confirmed it directly." It reached the right answer by inference, which would break if the page layout changed. It said so on its own, which is the lesson 3 habit. |
+| #3 summary matches the known answer | ⚠️ Partly. The symptom, test name, cause (`!due.isAfter(today)` vs the KDoc), ruled-out clock and time zone, Day 3 fix plan and reporter questions are all correct. **It left out the environment details:** Pixel_9_Pro, API 36, `e113532` and branch `day-2-issue-3-overdue-repro`. |
+| Named its source | ✅ "The public issues page", after the API was rate-limited. |
+| Anything made up? | ✅ Nothing. |
+| Did it actually use Chrome? | **Unclear.** "Rate-limited, so I read the public issues page" may be claude.ai's own web access again, as in run 1. Check the tool steps for Chrome actions (opening a tab, reading the page). |
+| Follow-up ("Compare that with pasting…") in the same chat | Not done yet. |
+
 **Lesson point found:** an answer can come from several sources (Chrome, claude.ai's web or sandbox, memory, pasted text). Turning one source off doesn't turn off the others, so check which tools are on before trusting a "connector off" result.
 
 **Then ask, in the run 2 chat:**
