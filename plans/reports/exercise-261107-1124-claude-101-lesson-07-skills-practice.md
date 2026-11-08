@@ -195,6 +195,22 @@ Update bug-repro-report:
 
 Read the saved skill again, then re-run **only #5** in a new chat. Pass if the questions now ask about empty vs spaces and an error message. Leave #3's cause label as Unverified, because that's correct.
 
+**Re-run of #5 after the update (2026-11-08): pass.**
+
+| Check | Before | After | Notes |
+|---|---|---|---|
+| Asks whether the title was empty or only spaces | ❌ | ✅ | Q3: "nothing, spaces only, or something else?" |
+| Asks whether an error or message appeared | ❌ | ✅ | Q4 |
+| Steps are actions, not states | ⚠️ | ✅ | Steps are now open screen, enter title, tap Save, with each unknown part marked. |
+| Doesn't repeat the reporter's guess as the cause | ⚠️ | ✅ | The cause is now **Unknown**, the right label when nothing has been run. |
+| Still no made-up facts | ✅ | ✅ | |
+
+**New things it did:**
+- **Q5 ("could the task have come from somewhere else?")** keeps the #4 duplicate-on-edit path open. That's the link the partner analysis flagged on Day 2.
+- **The steps are now a *suggested* path, not a known one.** Steps 3–5 are plausible actions, each marked unknown. A developer can't reproduce from this yet, and the report says so honestly. It becomes a real repro once the reporter answers Q3–Q5.
+
+**Lesson 7 loop done:** create → test (2 runs) → edit → re-test (pass).
+
 If either run fails a check, **iterate**. Ask Claude to edit the skill (for example, "Update bug-repro-report: if no steps are given, never write steps, ask instead"), save it, re-read it, and re-run the failing case in a new chat.
 
 ---
