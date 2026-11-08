@@ -38,9 +38,9 @@ Can you access my GitHub? List the repositories you can see, and tell me which a
 | | Notes |
 |---|---|
 | Connectors already connected (names only) | **Seen from a Claude Code session on the same account on 2026-11-08,** which loads account connectors as tools. **Gmail** is connected (read, label, draft, send). **Figma** is added but *not signed in*: only `authenticate` tools are offered. **Claude Docs** is connected. **GitHub is not connected.** Confirm this list in *Customize > Connectors*. Account connectors follow you into Claude Code, so Gmail's *send* tool is available there too. Disconnect anything you don't use. |
-| Did GitHub show up as a web connector or something else? What did the permission screen ask for? | |
-| Does it see `agilityio-claude-code-training`? | |
-| What actions does it say it can take? Does that match the permission screen? | |
+| Did GitHub show up as a web connector or something else? What did the permission screen ask for? | **Run 1 (2026-11-08) went to the wrong place:** a local Claude Code session, not claude.ai chat. It answered through the **`gh` CLI**, not a connector, using the account logged in on this Mac (`tungphan-agilityio`, active; a second account is logged in but not active). There was no permission screen, because CLI access reuses the token already on the machine. **Redo in claude.ai** (browser or Desktop **Chat** tab) to see the connector's permission screen. |
+| Does it see `agilityio-claude-code-training`? | Run 1: **yes, through the local repo's `origin`**, which a connector couldn't see. It said it had only checked the login and hadn't called the GitHub API yet. That's honest about what it had verified. |
+| What actions does it say it can take? Does that match the permission screen? | Run 1: read repos, issues and PRs, plus push, open PRs and comment **with your go-ahead**. The token's scopes are `repo`, `workflow`, `read:org` and `gist`, which means **full write access to every repo the account can reach, plus GitHub Actions workflows**. **Lesson point in reverse:** a connector shows its permissions and lets you toggle them per tool, while CLI access inherits whatever the token allows. Here, the only limit on write access is Claude asking first (and Claude Code's permission prompts, which blocked `git push` on Day 2). Compare with the connector's permission screen in the redo. |
 
 ---
 
