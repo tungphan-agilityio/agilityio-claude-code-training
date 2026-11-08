@@ -37,7 +37,7 @@ Can you access my GitHub? List the repositories you can see, and tell me which a
 
 | | Notes |
 |---|---|
-| Connectors already connected (names only) | |
+| Connectors already connected (names only) | **Seen from a Claude Code session on the same account on 2026-11-08,** which loads account connectors as tools. **Gmail** is connected (read, label, draft, send). **Figma** is added but *not signed in*: only `authenticate` tools are offered. **Claude Docs** is connected. **GitHub is not connected.** Confirm this list in *Customize > Connectors*. Account connectors follow you into Claude Code, so Gmail's *send* tool is available there too. Disconnect anything you don't use. |
 | Did GitHub show up as a web connector or something else? What did the permission screen ask for? | |
 | Does it see `agilityio-claude-code-training`? | |
 | What actions does it say it can take? Does that match the permission screen? | |
