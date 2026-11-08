@@ -146,12 +146,16 @@ List the open issues in the repository tungphan-agilityio/this-repo-does-not-exi
 
 Lesson point: **web connectors** reach cloud services; **desktop extensions** run locally through the Desktop app (files, browser, native apps).
 
+Drafted from what Parts A–C showed. Confirm or change each row.
+
 | Need | Web connector or desktop extension? | Why |
 |---|---|---|
-| Read GitHub issues for this repo | | |
-| Read `android-app/` files on my Mac without uploading them | | |
-| Read a Jira ticket at work | | |
-| Control a native app on my Mac | | |
+| Read GitHub issues for this repo | **Web connector in principle, but none existed in my claude.ai chat** | GitHub is a cloud service. Part A found no GitHub chat connector, so in practice Parts B–C used other routes: claude.ai's web fetch for public pages, **Claude in Chrome** (a *browser* extension that acts as my logged-in account) for writing, and a repo-scoped coding session (C2). For real work, Day 8's **GitHub MCP in Claude Code** is the proper connector. |
+| Read `android-app/` files on my Mac without uploading them | **Desktop extension** | Only something running locally can reach my disk. On Day 4, Claude Code reads the files directly, so I won't need an extension for this repo. |
+| Read a Jira ticket at work | **Web connector** (Atlassian Rovo) | Jira is a cloud service, and the directory lists *connectors, not apps*: one Rovo connector covers Jira and Confluence. An Owner has to add it first on Team and Enterprise plans. |
+| Control a native app on my Mac | **Desktop extension** | Native apps are only reachable locally, through the Desktop app. A web connector can't touch my machine. |
+
+**What I'd add to the lesson:** the line between web and local isn't only *where the data lives*, it's also *whose identity it uses*. A web connector has its own scoped permissions (Part A's screen). Chrome uses my whole logged-in account and is held back only by asking before acting (C1). Pick the narrowest one that does the job.
 
 <details>
 <summary>Suggested answers</summary>
