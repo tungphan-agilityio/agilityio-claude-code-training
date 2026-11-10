@@ -80,12 +80,12 @@ Answer its questions. Then check the prompt it gives you:
 
 | Check | Pass? | Notes |
 |---|---|---|
-| It has all the known facts (versions, minSdk 26, data model, out of scope) | | |
-| It asks for set **sections** (e.g. options, trade-offs, migration, testing, recommendation) | | |
-| It asks for **official sources first** (developer.android.com, release notes) | | |
-| It asks for a **date or version on every claim about the "latest" anything** | | |
-| It keeps cloud sync out of scope | | |
-| Anything it added that you didn't ask for (good or bad)? | | |
+| It has all the known facts (versions, minSdk 26, data model, out of scope) | Pass | Kotlin, AGP, compileSdk 37, minSdk 26, data model, scale, and out-of-scope items all present. |
+| It asks for set **sections** (e.g. options, trade-offs, migration, testing, recommendation) | Pass | Six sections, including recommendation, options table, implementation notes, risks, and assumptions. |
+| It asks for **official sources first** (developer.android.com, release notes) | Pass | developer.android.com is listed first in the source order. |
+| It asks for a **date or version on every claim about the "latest" anything** | Fail | It says "verify current stable versions" and "as of November 2026" only for maintenance. It doesn't require a date or version on each claim. |
+| It keeps cloud sync out of scope | Pass | Stated as out of scope in the context block. |
+| Anything it added that you didn't ask for (good or bad)? | Added | Named candidates (JSON file, SQLDelight, DataStore variants), a Flow/Compose assumption, Robolectric testing, an 800-word cap, and assumptions about encryption, sub-second writes, and no background sync. The last three aren't in the known facts, so confirm them before Part C. |
 
 ---
 
