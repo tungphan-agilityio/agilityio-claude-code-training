@@ -95,18 +95,18 @@ In a **new chat**, turn on **+ > Research**, paste the final prompt from Part B,
 
 | | Notes |
 |---|---|
-| How long did it take? How many sources did it cite? | |
-| Recommendation (one line) | |
-| Did it stay in scope (no cloud sync, no accounts)? | |
-| Did it use the facts (minSdk 26, `LocalDate` due dates, a few hundred rows)? | |
+| How long did it take? How many sources did it cite? | 5m 12s, 278 sources (per the Research completion card) |
+| Recommendation (one line) | Room 3.0.3 with Flow queries, over DataStore, SQLDelight and a JSON file. |
+| Did it stay in scope (no cloud sync, no accounts)? | Yes. It doesn't add sync or accounts. It does include Gradle dependency lines, which the prompt said to leave out (outline only). |
+| Did it use the facts (minSdk 26, `LocalDate` due dates, a few hundred rows)? | Yes. It covers minSdk 26, a `LocalDate` to `Long` converter, and the few-hundred-row scale. It is over the 800-word cap. |
 
 **Spot-check 3 citations.** Pick the 3 claims the recommendation leans on most. Open each source and check that it says what the report claims.
 
 | Claim | Source | Does the source say that? | Current? (date or version shown) |
 |---|---|---|---|
-| | | | |
-| | | | |
-| | | | |
+| Room 3.0.3 is stable and was released Sep 9, 2026 | AndroidX release notes (cited in report) | Not checked yet | Not checked yet |
+| DataStore is for small datasets, not partial updates or referential integrity | developer.android.com DataStore guide (quoted in report) | Not checked yet | Not checked yet |
+| KGP 2.4.20–2.4.21 is supported with AGP "8.5.2–9.3.1" only | kotlinlang.org "Configure a Gradle project" (cited in report) | Not checked yet. The report itself flags that AGP 9.4.1 is outside this range. | Not checked yet |
 
 **One known-answer check.** Ask in the same chat:
 
@@ -118,8 +118,8 @@ Then check the answer against the official release notes yourself. "Latest versi
 
 | | Notes |
 |---|---|
-| Version it named, and where from | |
-| Matches the official release notes today? | |
+| Version it named, and where from | Room 3.0.3 (`androidx.room3`) and KSP 2.3.13, as the report cites them (AndroidX release notes; the report gives no source for KSP 2.3.13). Not yet checked against Kotlin 2.4.21 or AGP 9.4.1. |
+| Matches the official release notes today? | Not checked yet. Compatibility with Kotlin 2.4.21 and AGP 9.4.1 is the open risk the report itself names. |
 
 ---
 
