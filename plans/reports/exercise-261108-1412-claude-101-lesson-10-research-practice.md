@@ -148,7 +148,7 @@ This function is the Day 3 fix. If Claude's answer matches, you already know wha
 
 ## Wrap-up
 
-- Lesson 10 done (tick it in the Day 2 phase file, or tell Claude Code): ☐
-- Does the lesson 10 takeaway in the [Day 2 sheet](exercise-261105-2255-day-02-ticket-analysis.md) still match? Rewrite it if not.
-- One citation that didn't hold up, or one that did (and how you checked):
-- For #7, would you act on the recommendation as it stands? What would you check first?
+- Lesson 10 done (tick it in the Day 2 phase file, or tell Claude Code): ☑
+- Does the lesson 10 takeaway in the [Day 2 sheet](exercise-261105-2255-day-02-ticket-analysis.md) still match? Rewrite it if not: **No, rewritten.** The takeaway missed the main lesson. Research is a draft, and its citations can be real while its version claims are still unverified, so every "latest" or compatibility claim needs checking against the release notes.
+- One citation that didn't hold up, or one that did (and how you checked): **Held up:** the Room 3.0.3 date (Sep 9, 2026), checked on the [Room 3.0 release page](https://developer.android.com/jetpack/androidx/releases/room3) and the [recent release notes](https://developer.android.com/jetpack/androidx/versions/all-channel). **Didn't hold up:** the claim that KSP 2.3.13 works with Kotlin 2.4.21 and AGP 9.4.1. The Kotlin docs list AGP only up to 9.3.1, and the KSP regression couldn't be confirmed from the release notes. Still open: check the [google/ksp releases page](https://github.com/google/ksp/releases).
+- For #7, would you act on the recommendation as it stands? What would you check first? **No, not yet.** Room is a reasonable direction, but the KSP version and the Kotlin/AGP pairing aren't confirmed. First, check whether KSP 2.3.13 has the regression and which KSP version works with Kotlin 2.4.21 and AGP 9.4.1. Second, compile a build with those versions in a spike branch. Third, check the DataStore quote against the official page word for word. These are the same checks the Day 3 fix needs.
