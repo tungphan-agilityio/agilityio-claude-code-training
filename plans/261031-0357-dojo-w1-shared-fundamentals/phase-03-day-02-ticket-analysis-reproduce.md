@@ -1,6 +1,6 @@
 ---
 title: "Phase 3: Day 2: Ticket Analysis, Reproduce & Understand"
-status: in-progress
+status: completed
 ---
 
 # Phase 3: Day 2: Ticket Analysis, Reproduce & Understand
@@ -19,7 +19,7 @@ Source: [day-02.html](https://dojo.agilityio.dev/schedule/day-02.html)
 - [x] Write exact repro steps (steps, expected, actual, environment) into the GitHub issue
 - [x] Paste stack trace/code into Claude, get hypotheses, verify each by running
 - [x] Git block: `git pull --rebase`, read `git log` / `git diff`, resolve seeded merge conflict #1
-- [ ] Course: finish [Claude 101](https://academy.claude.com/courses/claude-101) (lessons 1–6 are on Day 1)
+- [x] Course: finish [Claude 101](https://academy.claude.com/courses/claude-101) (lessons 1–6 are on Day 1)
   - [x] 7. [Working with skills](https://academy.claude.com/courses/claude-101/working-with-skills)
   - [x] 8. [Connecting your tools](https://academy.claude.com/courses/claude-101/connecting-your-tools)
   - [x] 9. [Enterprise search](https://academy.claude.com/courses/claude-101/enterprise-search) (skipped: Team/Enterprise only, solo plan)
