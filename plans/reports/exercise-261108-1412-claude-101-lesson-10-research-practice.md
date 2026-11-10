@@ -32,13 +32,13 @@ Fill in your pick *before* opening the answers.
 
 | # | Question | Your pick | Why |
 |---|---|---|---|
-| 1 | "Compare Room, DataStore and SQLDelight for storing a few hundred to-do tasks in a Compose app: trade-offs, migration story, testing." | | |
-| 2 | "What's the latest stable version of Room?" | | |
-| 3 | "Why does `!due.isAfter(today)` mark a task due today as overdue?" | | |
-| 4 | "Has anyone on our team already built offline storage for an Android app?" | | |
-| 5 | "Does DataStore support `minSdk 26`?" | | |
-| 6 | "Survey how popular to-do apps (open source) handle overdue logic and time zones, with examples." | | |
-| 7 | "Given these 7 issue titles, which two are probably related?" | | |
+| 1 | "Compare Room, DataStore and SQLDelight for storing a few hundred to-do tasks in a Compose app: trade-offs, migration story, testing." | Research | Compares several options across many sources, and the citations matter. |
+| 2 | "What's the latest stable version of Room?" | Web search | One fact, and speed matters. Check it against the official release notes. |
+| 3 | "Why does `!due.isAfter(today)` mark a task due today as overdue?" | Thinking | It's logic about one line of code, so outside sources add nothing. |
+| 4 | "Has anyone on our team already built offline storage for an Android app?" | Enterprise Search | It's internal knowledge, and it isn't on a solo plan. Fallback: ask a teammate. |
+| 5 | "Does DataStore support `minSdk 26`?" | Web search | A single compatibility fact. |
+| 6 | "Survey how popular to-do apps (open source) handle overdue logic and time zones, with examples." | Research | A survey of many sources with examples. |
+| 7 | "Given these 7 issue titles, which two are probably related?" | Thinking | All the context is in the prompt. |
 
 <details>
 <summary>Suggested answers</summary>
