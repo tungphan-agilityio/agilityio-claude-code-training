@@ -45,7 +45,9 @@ fun TaskListScreen(
                     Column {
                         Text(stringResource(R.string.tasks_title))
                         Text(
-                            stringResource(R.string.remaining_count, TaskRules.remainingCount(tasks)),
+                            stringResource(R.string.remaining_count, TaskRules.remainingCount(tasks)) +
+                                " · " +
+                                stringResource(R.string.overdue_count, TaskRules.overdueCount(tasks, today)),
                             style = MaterialTheme.typography.bodySmall,
                         )
                     }
