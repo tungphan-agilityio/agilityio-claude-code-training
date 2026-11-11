@@ -38,8 +38,11 @@ class TaskRulesTest {
     }
 
     @Test
-    fun `title of only spaces is required`() {
+    fun `title of only whitespace is required`() {
         assertEquals(TitleError.REQUIRED, TaskRules.validateTitle("   "))
+        assertEquals(TitleError.REQUIRED, TaskRules.validateTitle("\t"))
+        assertEquals(TitleError.REQUIRED, TaskRules.validateTitle("\n  "))
+        assertEquals(TitleError.REQUIRED, TaskRules.validateTitle(" \t\n "))
     }
 
     @Test
