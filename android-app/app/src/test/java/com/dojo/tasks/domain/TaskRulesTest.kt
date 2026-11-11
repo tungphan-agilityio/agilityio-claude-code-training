@@ -77,6 +77,18 @@ class TaskRulesTest {
     }
 
     @Test
+    fun `overdue count counts only open tasks due before today`() {
+        val tasks = listOf(
+            Task(1, "past open", dueDate = today.minusDays(1)),
+            Task(2, "past done", dueDate = today.minusDays(1), done = true),
+            Task(3, "due today", dueDate = today),
+            Task(4, "undated"),
+            Task(5, "past open too", dueDate = today.minusDays(3)),
+        )
+        assertEquals(2, TaskRules.overdueCount(tasks, today))
+    }
+
+    @Test
     fun `remaining count ignores done tasks`() {
         val tasks = listOf(Task(1, "a"), Task(2, "b", done = true), Task(3, "c"))
         assertEquals(2, TaskRules.remainingCount(tasks))

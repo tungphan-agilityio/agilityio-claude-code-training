@@ -38,6 +38,9 @@ object TaskRules {
     /** Number of tasks that still need doing. */
     fun remainingCount(tasks: List<Task>): Int = tasks.count { !it.done }
 
+    /** Number of tasks that are overdue on [today]. */
+    fun overdueCount(tasks: List<Task>, today: LocalDate): Int = tasks.count { isOverdue(it, today) }
+
     /** Open tasks first, ordered by due date (no date last), then completed tasks. */
     fun sortForList(tasks: List<Task>): List<Task> =
         tasks.sortedWith(
