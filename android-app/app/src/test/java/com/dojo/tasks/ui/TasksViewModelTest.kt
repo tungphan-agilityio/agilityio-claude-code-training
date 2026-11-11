@@ -47,6 +47,14 @@ class TasksViewModelTest {
     }
 
     @Test
+    fun `editing a task updates it in place instead of copying it`() {
+        vm.openEdit(1)
+        assertTrue(vm.saveForm("Renamed", "", ""))
+        assertEquals(1, repo.tasks.value.size)
+        assertEquals("Renamed", repo.get(1)?.title)
+    }
+
+    @Test
     fun `toggle done flips the flag`() {
         vm.toggleDone(1)
         assertTrue(repo.get(1)!!.done)
