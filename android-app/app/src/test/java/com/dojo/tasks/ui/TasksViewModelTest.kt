@@ -32,6 +32,14 @@ class TasksViewModelTest {
     }
 
     @Test
+    fun `title of only spaces shows an error and saves nothing`() {
+        vm.openNewTask()
+        assertFalse(vm.saveForm("   ", "notes", ""))
+        assertEquals(TitleError.REQUIRED, vm.formErrors.value.title)
+        assertEquals(1, repo.tasks.value.size)
+    }
+
+    @Test
     fun `bad date shows an error`() {
         vm.openNewTask()
         assertFalse(vm.saveForm("Title", "", "tomorrow"))
