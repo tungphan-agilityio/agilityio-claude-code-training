@@ -20,7 +20,7 @@ object TaskRules {
 
     /** Returns null when the title is valid. */
     fun validateTitle(title: String): TitleError? = when {
-        title.isEmpty() -> TitleError.REQUIRED
+        title.isBlank() -> TitleError.REQUIRED
         title.trim().length > MAX_TITLE_LENGTH -> TitleError.TOO_LONG
         else -> null
     }

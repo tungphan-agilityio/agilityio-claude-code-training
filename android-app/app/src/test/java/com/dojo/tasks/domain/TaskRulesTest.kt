@@ -38,6 +38,14 @@ class TaskRulesTest {
     }
 
     @Test
+    fun `title of only whitespace is required`() {
+        assertEquals(TitleError.REQUIRED, TaskRules.validateTitle("   "))
+        assertEquals(TitleError.REQUIRED, TaskRules.validateTitle("\t"))
+        assertEquals(TitleError.REQUIRED, TaskRules.validateTitle("\n  "))
+        assertEquals(TitleError.REQUIRED, TaskRules.validateTitle(" \t\n "))
+    }
+
+    @Test
     fun `title over max length is too long`() {
         assertEquals(TitleError.TOO_LONG, TaskRules.validateTitle("x".repeat(TaskRules.MAX_TITLE_LENGTH + 1)))
     }
