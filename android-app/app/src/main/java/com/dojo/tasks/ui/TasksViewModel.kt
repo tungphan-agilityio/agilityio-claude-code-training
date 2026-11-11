@@ -72,6 +72,7 @@ class TasksViewModel(private val repository: TaskRepository) : ViewModel() {
         val editing = (_screen.value as? Screen.Form)?.taskId?.let(repository::get)
         val saved = repository.save(
             Task(
+                id = editing?.id ?: Task.NEW_ID,
                 title = title.trim(),
                 notes = notes.trim(),
                 dueDate = due.getOrNull(),
