@@ -33,6 +33,13 @@ class TasksViewModel(private val repository: TaskRepository) : ViewModel() {
     private val _formErrors = MutableStateFlow(FormErrors())
     val formErrors: StateFlow<FormErrors> = _formErrors.asStateFlow()
 
+    private val _query = MutableStateFlow("")
+    val query: StateFlow<String> = _query.asStateFlow()
+
+    fun setQuery(text: String) {
+        _query.value = text
+    }
+
     fun task(id: Long): Task? = repository.get(id)
 
     fun openDetail(id: Long) = navigate(Screen.Detail(id))

@@ -37,12 +37,15 @@ private fun DojoTasksApp(
     val screen by vm.screen.collectAsStateWithLifecycle()
     val tasks by vm.tasks.collectAsStateWithLifecycle()
     val formErrors by vm.formErrors.collectAsStateWithLifecycle()
+    val query by vm.query.collectAsStateWithLifecycle()
 
     BackHandler(enabled = screen != Screen.List) { vm.back() }
 
     when (val current = screen) {
         Screen.List -> TaskListScreen(
             tasks = tasks,
+            query = query,
+            onQueryChange = vm::setQuery,
             onOpen = vm::openDetail,
             onToggleDone = vm::toggleDone,
             onAdd = vm::openNewTask,

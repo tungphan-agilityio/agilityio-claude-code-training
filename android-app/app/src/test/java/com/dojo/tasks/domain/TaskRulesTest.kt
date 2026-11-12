@@ -102,4 +102,28 @@ class TaskRulesTest {
         val sooner = Task(4, "sooner", dueDate = today)
         assertEquals(listOf(sooner, later, undated, done), TaskRules.sortForList(listOf(done, undated, later, sooner)))
     }
+
+    // Issue #6: search matches titles only, ignoring case and surrounding spaces.
+    private val milk = Task(1, "Buy Milk", notes = "whole, 2 litres")
+    private val tea = Task(2, "Make tea")
+
+    @Test
+    fun `title search ignores case`() {
+        assertEquals(listOf(milk), TaskRules.filterByTitle(listOf(milk, tea), "milk"))
+    }
+
+    @Test
+    fun `title search matches part of a title and trims the query`() {
+        assertEquals(listOf(tea), TaskRules.filterByTitle(listOf(milk, tea), "  tea "))
+    }
+
+    @Test
+    fun `blank query keeps every task`() {
+        assertEquals(listOf(milk, tea), TaskRules.filterByTitle(listOf(milk, tea), "   "))
+    }
+
+    @Test
+    fun `title search does not match notes`() {
+        assertEquals(emptyList<Task>(), TaskRules.filterByTitle(listOf(milk, tea), "litres"))
+    }
 }
