@@ -35,7 +35,7 @@ None. This plan blocks the W2, W3 and Capstone plans.
 | 1 | [Phase 1: Day 0: Training App Scaffold](./phase-01-day-00-training-app-scaffold.md) | Done |
 | 2 | [Phase 2: Day 1: Mental Model + Claude Basics](./phase-02-day-01-mental-model-claude-basics.md) | Done |
 | 3 | [Phase 3: Day 2: Ticket Analysis, Reproduce & Understand](./phase-03-day-02-ticket-analysis-reproduce.md) | Completed |
-| 4 | [Phase 4: Day 3: Fix, Review, Merge (Checkpoint 1)](./phase-04-day-03-fix-review-merge-checkpoint-1.md) | Pending |
+| 4 | [Phase 4: Day 3: Fix, Review, Merge (Checkpoint 1)](./phase-04-day-03-fix-review-merge-checkpoint-1.md) | In progress |
 
 ## Success Criteria
 
