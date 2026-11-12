@@ -14,7 +14,7 @@ Source: [day-03.html](https://dojo.agilityio.dev/schedule/day-03.html)
 ## Todo
 
 - [x] Fix the Day-2 bug on a branch with small commits and the test passing
-- [ ] Draft PR description with Claude (what, why, how tested, screenshots), then hand-edit
+- [x] Draft PR description with Claude (what, why, how tested, screenshots), then hand-edit
 - [x] Open PR against the training repo; keep CI green
 - [x] Solo peer swap: open a second small PR (another seeded ticket); next day or in a fresh session, judge if it can be reviewed from the description alone
 - [ ] Review the second PR cold with checklist order: correctness, tests, readability, security basics, scope (3+ actionable comments posted on GitHub); optionally compare with a Claude reviewer subagent
