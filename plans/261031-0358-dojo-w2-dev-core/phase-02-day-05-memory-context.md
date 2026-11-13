@@ -1,6 +1,6 @@
 ---
 title: "Phase 2: Day 5: Memory & Context"
-status: todo
+status: completed
 ---
 
 # Phase 2: Day 5: Memory & Context
@@ -13,10 +13,10 @@ Source: [day-05.html](https://dojo.agilityio.dev/schedule/day-05.html)
 
 ## Todo
 
-- [ ] Write repo-root `CLAUDE.md`: Gradle build/run/test commands, conventions, never-do list; one screen max
-- [ ] Run a long session, `/compact`, observe what survives
-- [ ] Review auto-memory entries via `/memory`
-- [ ] Make a bad edit and undo it with `/rewind` (Esc Esc on empty prompt)
+- [x] Write repo-root `CLAUDE.md`: Gradle build/run/test commands, conventions, never-do list; one screen max
+- [x] Run a long session, `/compact`, observe what survives
+- [x] Review auto-memory entries via `/memory`
+- [x] Make a bad edit and undo it with `/rewind` (Esc Esc on empty prompt)
 
 ## Exercise
 
@@ -24,10 +24,10 @@ Do the same task in a fresh session and in a codebase-primed session; compare ou
 
 ## Deliverables
 
-- [ ] `CLAUDE.md` merged via PR
-- [ ] Reviewed memory entries
-- [ ] Rewind demonstrated
-- [ ] Fresh vs primed comparison notes
+- [x] `CLAUDE.md` merged via PR
+- [x] Reviewed memory entries
+- [x] Rewind demonstrated
+- [x] Fresh vs primed comparison notes
 
 ## Notes / Skills
 

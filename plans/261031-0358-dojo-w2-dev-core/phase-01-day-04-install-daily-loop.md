@@ -1,6 +1,6 @@
 ---
 title: "Phase 1: Day 4: Install & Daily Loop"
-status: todo
+status: completed
 ---
 
 # Phase 1: Day 4: Install & Daily Loop
@@ -13,10 +13,10 @@ Source: [day-04.html](https://dojo.agilityio.dev/schedule/day-04.html)
 
 ## Todo
 
-- [ ] Install and verify the Desktop Code tab on the training repo
-- [ ] Session basics: sidebar, resume, one topic per session (`/resume`, `claude --resume`)
-- [ ] Tour permission modes (default, acceptEdits, plan, auto) on a throwaway change
-- [ ] Read Claude Code common workflows + best practices docs
+- [x] Install and verify the Desktop Code tab on the training repo
+- [x] Session basics: sidebar, resume, one topic per session (`/resume`, `claude --resume`)
+- [x] Tour permission modes (default, acceptEdits, plan, auto) on a throwaway change
+- [x] Read Claude Code common workflows + best practices docs
 
 ## Exercise
 
@@ -24,8 +24,8 @@ Source: [day-04.html](https://dojo.agilityio.dev/schedule/day-04.html)
 
 ## Deliverables
 
-- [ ] Feature explanation with 2 verified claims
-- [ ] 2 PRs from the plan-first loop
+- [x] Feature explanation with 2 verified claims
+- [x] 2 PRs from the plan-first loop
 
 ## Notes / Skills
 
