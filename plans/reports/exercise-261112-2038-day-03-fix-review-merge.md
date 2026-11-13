@@ -2,7 +2,9 @@
 
 Phase: [phase-04-day-03-fix-review-merge-checkpoint-1.md](../261031-0357-dojo-w1-shared-fundamentals/phase-04-day-03-fix-review-merge-checkpoint-1.md)
 
-**Outcome.** Three of four checkpoint criteria are met. The fourth is only partly met: the merge with a resolved conflict is done, but the cold review did not reach three actionable comments. I recorded this gap rather than padding the review.
+**Update 2026-11-13: the retake passed and Checkpoint 1 is now passed. See the Retake section at the end.**
+
+**Outcome on Day 3.** Three of four checkpoint criteria are met. The fourth is only partly met: the merge with a resolved conflict is done, but the cold review did not reach three actionable comments. I recorded this gap rather than padding the review.
 
 ---
 
@@ -52,8 +54,26 @@ The phase file says: "If failed: repeat the exercise as paired homework on Days 
 
 - **Outcome: Checkpoint 1 failed on the cold-review criterion.** The fix, PR, conflict and merge criteria passed. The phase rule applies: repeat the cold review as paired homework on Days 4-5.
 
-## Open
+## Retake (2026-11-13): passed
 
-- **Retake:** run the cold review again on a PR with three real actionable findings, in a fresh session. Retake target still to be chosen.
-- **Earlier homework target (not met):** PR #25 [#25](https://github.com/tungphan-agilityio/agilityio-claude-code-training/pull/25)**, `feat: add title search to the task list (#6)`. It is open, has no reviews, and changes 73 lines across the rules, view model, list screen and tests. Run the cold review in a fresh session that gets the PR description and diff only. It needs at least three real actionable comments.
-- Confirm whether the PR #19 description was drafted with Claude.
+**Outcome.** The cold review was repeated on a seeded practice PR and produced seven real, actionable comments. The fourth criterion is now met, so Checkpoint 1 is passed.
+
+- **Target.** [#31](https://github.com/tungphan-agilityio/agilityio-claude-code-training/pull/31), `feat: add share summary of tasks`. One Claude session wrote it with six planted defects and kept the answer key outside the repo. CI was green, because the PR's own tests did not catch the defects. `seed/buggy-review` was left alone for Day 10.
+- **Review.** A second, fresh Claude session got the PR description and diff only. It judged the PR reviewable from the description alone and posted [one review](https://github.com/tungphan-agilityio/agilityio-claude-code-training/pull/31#pullrequestreview-5893927436) with seven inline comments in checklist order.
+- **Check.** I compared each comment with the answer key and with the code. All six planted defects were found. The seventh comment was not planted and is also real.
+
+| # | Area | Where | Finding | In answer key |
+|---|---|---|---|---|
+| 1 | Correctness | `ShareSummary.kt:16` | `doneCount` counts tasks that are not done, but the header labels it "done". Three tasks with two done prints "1 done". | Yes |
+| 2 | Correctness | `ShareSummary.kt:25` | A task without a due date prints "due null". | Yes |
+| 3 | Tests | `ShareSummaryTest.kt:20` | The header test only checks `startsWith("2 tasks")`, and its data has one done and one open task, so it cannot catch finding 1. | No, extra |
+| 4 | Tests | `ShareSummary.kt:29` | `dueThisWeek` has no test, although it has a 7-day boundary. | Yes |
+| 5 | Readability | `ShareSummary.kt:35` | The KDoc says the subject names the overdue count; the code uses the total count. | Yes |
+| 6 | Security basics | `ShareSummary.kt:41` | The first task's title goes into the file name unsanitised, so `/` and `..` pass through. | Yes |
+| 7 | Scope | `strings.xml:25` | An unrelated wording change to `error_bad_date`. | Yes |
+
+- **One weak suggestion.** Comment 2 proposes reusing the `no_due_date` string resource. `ShareSummary` is in `domain/`, which has no Android imports, so the fix should be plain Kotlin text instead. The finding itself stands.
+- **Who reviewed.** A Claude session did this review as the solo stand-in for a peer, the same way as the PR #20 review. I did not review the PR by hand.
+- **Cleanup.** PR #31 was closed without merging and its branch was deleted.
+
+The PR #25 homework attempt stays as recorded: one comment, not met. That bug was fixed and #25 was merged on 2026-11-13.

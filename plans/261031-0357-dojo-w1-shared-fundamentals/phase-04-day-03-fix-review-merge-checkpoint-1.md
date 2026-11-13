@@ -1,6 +1,6 @@
 ---
 title: "Phase 4: Day 3: Fix, Review, Merge (Checkpoint 1)"
-status: in-progress
+status: completed
 ---
 
 # Phase 4: Day 3: Fix, Review, Merge (Checkpoint 1)
@@ -17,7 +17,7 @@ Source: [day-03.html](https://dojo.agilityio.dev/schedule/day-03.html)
 - [x] Draft PR description with Claude (what, why, how tested, screenshots), then hand-edit
 - [x] Open PR against the training repo; keep CI green
 - [x] Solo peer swap: open a second small PR (another seeded ticket); next day or in a fresh session, judge if it can be reviewed from the description alone
-- [ ] Review the second PR cold with checklist order: correctness, tests, readability, security basics, scope (3+ actionable comments posted on GitHub); optionally compare with a Claude reviewer subagent
+- [x] Review the second PR cold with checklist order: correctness, tests, readability, security basics, scope (3+ actionable comments posted on GitHub); optionally compare with a Claude reviewer subagent
 - [x] Resolve seeded conflict on your PR, merge, delete branch
 
 ## Exercise
@@ -28,7 +28,7 @@ Draft-then-own PR description; review with the checklist.
 
 - [x] Branch with fix + test
 - [x] PR with self-contained description
-- [ ] Cold review of second PR with 3 actionable comments
+- [x] Cold review of second PR with 3 actionable comments
 - [x] Merged PR, conflict resolved, branch deleted
 
 ## Checkpoint (pass criteria)
@@ -36,7 +36,7 @@ Draft-then-own PR description; review with the checklist.
 - [x] Reproduce the assigned bug and write the repro in the ticket
 - [x] Fix on a branch with a test
 - [x] Open a PR with a self-contained description
-- [ ] One cold review (solo stand-in for peer review) with 3 actionable comments and one merge with conflict resolved
+- [x] One cold review (solo stand-in for peer review) with 3 actionable comments and one merge with conflict resolved
 
 ## Notes / Skills
 
