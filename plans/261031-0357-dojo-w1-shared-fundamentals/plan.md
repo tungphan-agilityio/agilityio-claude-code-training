@@ -1,7 +1,7 @@
 ---
 title: "Dojo W1: Shared Fundamentals (Days 1-3)"
 description: "Week 1 shared fundamentals: ticket to repro to fix to PR to review to merge, plus app scaffold."
-status: in-progress
+status: completed
 priority: P1
 effort: "4d"
 tags: ["dojo", "training", "fundamentals"]
@@ -35,10 +35,10 @@ None. This plan blocks the W2, W3 and Capstone plans.
 | 1 | [Phase 1: Day 0: Training App Scaffold](./phase-01-day-00-training-app-scaffold.md) | Done |
 | 2 | [Phase 2: Day 1: Mental Model + Claude Basics](./phase-02-day-01-mental-model-claude-basics.md) | Done |
 | 3 | [Phase 3: Day 2: Ticket Analysis, Reproduce & Understand](./phase-03-day-02-ticket-analysis-reproduce.md) | Completed |
-| 4 | [Phase 4: Day 3: Fix, Review, Merge (Checkpoint 1)](./phase-04-day-03-fix-review-merge-checkpoint-1.md) | In progress |
+| 4 | [Phase 4: Day 3: Fix, Review, Merge (Checkpoint 1)](./phase-04-day-03-fix-review-merge-checkpoint-1.md) | Completed |
 
 ## Success Criteria
 
-- [ ] Checkpoint 1 items in Phase 4 all checked
+- [x] Checkpoint 1 items in Phase 4 all checked
 
 <!-- slug: dojo-w1-shared-fundamentals -->
