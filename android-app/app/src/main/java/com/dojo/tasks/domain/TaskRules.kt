@@ -35,6 +35,17 @@ object TaskRules {
         }
     }
 
+    /** Tasks whose title contains [query], ignoring case and surrounding spaces. A blank query keeps every task. */
+    fun filterByTitle(tasks: List<Task>, query: String): List<Task> {
+        val needle = query.trim()
+        if (needle.isEmpty()) return tasks
+        return tasks.filter { it.title.contains(needle, ignoreCase = true) }
+    }
+
+    /** True when tasks exist but none matches [query]. False when there are no tasks at all. */
+    fun isSearchMiss(tasks: List<Task>, query: String): Boolean =
+        tasks.isNotEmpty() && filterByTitle(tasks, query).isEmpty()
+
     /** Number of tasks that still need doing. */
     fun remainingCount(tasks: List<Task>): Int = tasks.count { !it.done }
 

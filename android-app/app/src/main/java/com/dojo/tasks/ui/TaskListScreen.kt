@@ -4,6 +4,7 @@ import androidx.compose.foundation.clickable
 import androidx.compose.foundation.layout.Box
 import androidx.compose.foundation.layout.Column
 import androidx.compose.foundation.layout.fillMaxSize
+import androidx.compose.foundation.layout.fillMaxWidth
 import androidx.compose.foundation.layout.padding
 import androidx.compose.foundation.lazy.LazyColumn
 import androidx.compose.foundation.lazy.items
@@ -13,6 +14,7 @@ import androidx.compose.material3.FloatingActionButton
 import androidx.compose.material3.HorizontalDivider
 import androidx.compose.material3.ListItem
 import androidx.compose.material3.MaterialTheme
+import androidx.compose.material3.OutlinedTextField
 import androidx.compose.material3.Scaffold
 import androidx.compose.material3.Text
 import androidx.compose.material3.TopAppBar
@@ -32,11 +34,13 @@ import java.time.LocalDate
 @Composable
 fun TaskListScreen(
     tasks: List<Task>,
+    query: String,
+    onQueryChange: (String) -> Unit,
     onOpen: (Long) -> Unit,
     onToggleDone: (Long) -> Unit,
     onAdd: () -> Unit,
 ) {
-    val sorted = remember(tasks) { TaskRules.sortForList(tasks) }
+    val visible = remember(tasks, query) { TaskRules.sortForList(TaskRules.filterByTitle(tasks, query)) }
     val today = LocalDate.now()
     Scaffold(
         topBar = {
@@ -58,15 +62,25 @@ fun TaskListScreen(
             FloatingActionButton(onClick = onAdd) { Text("+", style = MaterialTheme.typography.headlineSmall) }
         },
     ) { padding ->
-        if (sorted.isEmpty()) {
-            Box(Modifier.fillMaxSize().padding(padding), contentAlignment = Alignment.Center) {
-                Text(stringResource(R.string.empty_tasks))
-            }
-        } else {
-            LazyColumn(Modifier.fillMaxSize().padding(padding)) {
-                items(sorted, key = { it.id }) { task ->
-                    TaskRow(task, today, onOpen = { onOpen(task.id) }, onToggleDone = { onToggleDone(task.id) })
-                    HorizontalDivider()
+        Column(Modifier.fillMaxSize().padding(padding)) {
+            OutlinedTextField(
+                value = query,
+                onValueChange = onQueryChange,
+                label = { Text(stringResource(R.string.search_hint)) },
+                singleLine = true,
+                modifier = Modifier.fillMaxWidth().padding(horizontal = 16.dp, vertical = 8.dp),
+            )
+            if (visible.isEmpty()) {
+                Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
+                    val message = if (TaskRules.isSearchMiss(tasks, query)) R.string.no_matching_tasks else R.string.empty_tasks
+                    Text(stringResource(message))
+                }
+            } else {
+                LazyColumn(Modifier.fillMaxSize()) {
+                    items(visible, key = { it.id }) { task ->
+                        TaskRow(task, today, onOpen = { onOpen(task.id) }, onToggleDone = { onToggleDone(task.id) })
+                        HorizontalDivider()
+                    }
                 }
             }
         }

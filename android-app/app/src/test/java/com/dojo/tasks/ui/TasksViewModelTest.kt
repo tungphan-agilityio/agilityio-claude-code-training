@@ -55,6 +55,12 @@ class TasksViewModelTest {
     }
 
     @Test
+    fun `setting the search text updates the query`() {
+        vm.setQuery("exist")
+        assertEquals("exist", vm.query.value)
+    }
+
+    @Test
     fun `toggle done flips the flag`() {
         vm.toggleDone(1)
         assertTrue(repo.get(1)!!.done)
