@@ -1,7 +1,7 @@
 ---
 title: "Dojo W2: Developer Track Core (Days 4-6)"
 description: "Claude Code Desktop core: daily loop, memory/context, flagship features and parallel sessions."
-status: pending
+status: in-progress
 priority: P1
 effort: "3d"
 tags: ["dojo", "training", "developer", "mobile"]
@@ -32,8 +32,8 @@ Blocked by Dojo W1 (Checkpoint 1 passed or remediation scheduled as paired homew
 
 | # | Phase | Status |
 |---|-------|--------|
-| 1 | [Phase 1: Day 4: Install & Daily Loop](./phase-01-day-04-install-daily-loop.md) | Pending |
-| 2 | [Phase 2: Day 5: Memory & Context](./phase-02-day-05-memory-context.md) | Pending |
+| 1 | [Phase 1: Day 4: Install & Daily Loop](./phase-01-day-04-install-daily-loop.md) | Completed |
+| 2 | [Phase 2: Day 5: Memory & Context](./phase-02-day-05-memory-context.md) | Completed |
 | 3 | [Phase 3: Day 6: Flagship & Parallel (Checkpoint 2)](./phase-03-day-06-flagship-parallel-checkpoint-2.md) | Pending |
 
 ## Success Criteria
