@@ -22,5 +22,5 @@
     <string name="no_due_date">No due date</string>
     <string name="error_title_required">Title is required</string>
     <string name="error_title_too_long">Title must be 80 characters or fewer</string>
-    <string name="error_bad_date">Use the format yyyy-mm-dd</string>
+    <string name="error_bad_date">Use format yyyy-mm-dd</string>
 </resources>
