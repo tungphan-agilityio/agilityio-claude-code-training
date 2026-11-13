@@ -1,6 +1,6 @@
 ---
 title: "Phase 3: Day 6: Flagship & Parallel (Checkpoint 2)"
-status: todo
+status: in-progress
 ---
 
 # Phase 3: Day 6: Flagship & Parallel (Checkpoint 2)
