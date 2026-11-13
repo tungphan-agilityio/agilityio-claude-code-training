@@ -42,6 +42,9 @@ object TaskRules {
         return tasks.filter { it.title.contains(needle, ignoreCase = true) }
     }
 
+    /** True when tasks exist but none matches [query]. False when there are no tasks at all. */
+    fun isSearchMiss(tasks: List<Task>, query: String): Boolean = query.isNotBlank()
+
     /** Number of tasks that still need doing. */
     fun remainingCount(tasks: List<Task>): Int = tasks.count { !it.done }
 

@@ -72,7 +72,7 @@ fun TaskListScreen(
             )
             if (visible.isEmpty()) {
                 Box(Modifier.fillMaxSize(), contentAlignment = Alignment.Center) {
-                    val message = if (query.isBlank()) R.string.empty_tasks else R.string.no_matching_tasks
+                    val message = if (TaskRules.isSearchMiss(tasks, query)) R.string.no_matching_tasks else R.string.empty_tasks
                     Text(stringResource(message))
                 }
             } else {

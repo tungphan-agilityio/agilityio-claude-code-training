@@ -126,4 +126,19 @@ class TaskRulesTest {
     fun `title search does not match notes`() {
         assertEquals(emptyList<Task>(), TaskRules.filterByTitle(listOf(milk, tea), "litres"))
     }
+
+    @Test
+    fun `a search with no matching title is a search miss`() {
+        assertTrue(TaskRules.isSearchMiss(listOf(milk, tea), "litres"))
+    }
+
+    @Test
+    fun `an empty task list is not a search miss even with a query typed`() {
+        assertFalse(TaskRules.isSearchMiss(emptyList(), "x"))
+    }
+
+    @Test
+    fun `an empty task list with a blank query is not a search miss`() {
+        assertFalse(TaskRules.isSearchMiss(emptyList(), "  "))
+    }
 }
