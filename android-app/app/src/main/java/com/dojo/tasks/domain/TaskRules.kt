@@ -14,8 +14,8 @@ object TaskRules {
 
     /** A task is overdue when it is not done and its due date is before [today]. */
     fun isOverdue(task: Task, today: LocalDate): Boolean {
-        val dueDate = task.dueDate ?: return false
-        return !task.done && dueDate.isBefore(today)
+        val deadline = task.dueDate ?: return false
+        return !task.done && deadline.isBefore(today)
     }
 
     /** Returns null when the title is valid. */
