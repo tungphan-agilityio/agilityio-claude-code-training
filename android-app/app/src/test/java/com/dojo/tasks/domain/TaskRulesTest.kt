@@ -103,6 +103,34 @@ class TaskRulesTest {
         assertEquals(listOf(sooner, later, undated, done), TaskRules.sortForList(listOf(done, undated, later, sooner)))
     }
 
+    // Issue #34: the sort is stable, so each input below starts in the wrong order.
+    // That way a test fails when the step it guards is removed.
+    @Test
+    fun `sort orders open tasks with the same due date by id`() {
+        val first = Task(1, "first", dueDate = today)
+        val second = Task(2, "second", dueDate = today)
+        assertEquals(listOf(first, second), TaskRules.sortForList(listOf(second, first)))
+    }
+
+    @Test
+    fun `sort orders undated open tasks by id`() {
+        val lowerId = Task(3, "lower id")
+        val higherId = Task(5, "higher id")
+        assertEquals(listOf(lowerId, higherId), TaskRules.sortForList(listOf(higherId, lowerId)))
+    }
+
+    @Test
+    fun `sort orders completed tasks by due date, undated last, then id`() {
+        val undated = Task(1, "undated", done = true)
+        val later = Task(2, "later", dueDate = today.plusDays(3), done = true)
+        val soonerLowerId = Task(3, "sooner, lower id", dueDate = today, done = true)
+        val soonerHigherId = Task(4, "sooner, higher id", dueDate = today, done = true)
+        assertEquals(
+            listOf(soonerLowerId, soonerHigherId, later, undated),
+            TaskRules.sortForList(listOf(undated, later, soonerHigherId, soonerLowerId)),
+        )
+    }
+
     // Issue #6: search matches titles only, ignoring case and surrounding spaces.
     private val milk = Task(1, "Buy Milk", notes = "whole, 2 litres")
     private val tea = Task(2, "Make tea")
