@@ -34,7 +34,7 @@ Blocked by Dojo W1 (Checkpoint 1 passed or remediation scheduled as paired homew
 |---|-------|--------|
 | 1 | [Phase 1: Day 4: Install & Daily Loop](./phase-01-day-04-install-daily-loop.md) | Completed |
 | 2 | [Phase 2: Day 5: Memory & Context](./phase-02-day-05-memory-context.md) | Completed |
-| 3 | [Phase 3: Day 6: Flagship & Parallel (Checkpoint 2)](./phase-03-day-06-flagship-parallel-checkpoint-2.md) | Pending |
+| 3 | [Phase 3: Day 6: Flagship & Parallel (Checkpoint 2)](./phase-03-day-06-flagship-parallel-checkpoint-2.md) | In progress |
 
 ## Success Criteria
 
