@@ -56,6 +56,17 @@ class TaskRulesTest {
         assertEquals(TitleError.TOO_LONG, TaskRules.validateTitle("x".repeat(TaskRules.MAX_TITLE_LENGTH + 1)))
     }
 
+    // Issue #35: the length limit is inclusive and is measured after trimming.
+    @Test
+    fun `title of exactly max length is valid`() {
+        assertNull(TaskRules.validateTitle("x".repeat(TaskRules.MAX_TITLE_LENGTH)))
+    }
+
+    @Test
+    fun `title length is measured after trimming`() {
+        assertNull(TaskRules.validateTitle("  " + "x".repeat(TaskRules.MAX_TITLE_LENGTH) + "  "))
+    }
+
     @Test
     fun `normal title is valid`() {
         assertNull(TaskRules.validateTitle("Buy milk"))
@@ -74,6 +85,17 @@ class TaskRulesTest {
     @Test
     fun `bad due date fails`() {
         assertTrue(TaskRules.parseDueDate("01/12/2026").isFailure)
+    }
+
+    // Issue #35: surrounding spaces are ignored, and a date that does not exist is rejected.
+    @Test
+    fun `due date with surrounding spaces parses`() {
+        assertEquals(LocalDate.of(2026, 12, 1), TaskRules.parseDueDate(" 2026-12-01 ").getOrThrow())
+    }
+
+    @Test
+    fun `impossible due date fails`() {
+        assertTrue(TaskRules.parseDueDate("2026-02-30").isFailure)
     }
 
     @Test
