@@ -52,7 +52,10 @@ object TaskRules {
     /** Number of tasks that are overdue on [today]. */
     fun overdueCount(tasks: List<Task>, today: LocalDate): Int = tasks.count { isOverdue(it, today) }
 
-    /** Open tasks first, ordered by due date (no date last), then completed tasks. */
+    /**
+     * Open tasks first, then completed tasks. Both groups use the same order:
+     * earliest due date first, tasks with no due date last, and ties broken by id.
+     */
     fun sortForList(tasks: List<Task>): List<Task> =
         tasks.sortedWith(
             compareBy<Task> { it.done }
