@@ -16,7 +16,7 @@ Source: [day-06.html](https://dojo.agilityio.dev/schedule/day-06.html)
 - [ ] Publish a PR walkthrough artifact from a session; open the share link on your phone to check it
 - [ ] Run `/loop 15m` on an open PR (built-in maintenance prompt)
 - [ ] Run a custom `/loop 5m` to check a deploy/CI; write `loop.md` for the repo
-- [ ] Start `/rc`, connect from phone via claude.ai/code, send a steer
+- [x] Start `/rc`, connect from phone via claude.ai/code, send a steer
 - [ ] Use `ultrathink` on a hard bug; rerun at different `/effort` levels and compare
 - [ ] Work two tickets in isolated worktrees (`claude --worktree <name>`), monitor in agent view
 - [ ] Complete the subagents intro course
@@ -38,8 +38,8 @@ Produce one artifact, one `/loop` run, one phone steer; screenshot each and save
 - [ ] Two parallel sessions, both merged
 - [ ] One plan-mode change steered via diff comments
 - [x] One artifact
-- [ ] One Remote Control steer
-- [ ] One `/loop` run
+- [x] One Remote Control steer
+- [x] One `/loop` run
 
 ## Notes / Skills
 
