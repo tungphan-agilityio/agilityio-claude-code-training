@@ -29,7 +29,7 @@ Produce one artifact, one `/loop` run, one phone steer; screenshot each and save
 ## Deliverables
 
 - [ ] PR walkthrough artifact + share link
-- [ ] `loop.md`
+- [x] `loop.md` (`.claude/loop.md`, PR #33)
 - [ ] Screenshots (artifact, loop, phone)
 - [ ] Two parallel-session PRs merged
 
@@ -37,11 +37,13 @@ Produce one artifact, one `/loop` run, one phone steer; screenshot each and save
 
 - [ ] Two parallel sessions, both merged
 - [ ] One plan-mode change steered via diff comments
-- [ ] One artifact
+- [x] One artifact
 - [ ] One Remote Control steer
 - [ ] One `/loop` run
 
 ## Notes / Skills
+
+PR #33 walkthrough artifact: https://claude.ai/artifact/T8dVv6nmANh2c4qK9TFyJ4 (private until shared from its Share menu; not yet opened on the phone).
 
 Remote Control needs Pro/Max/Team/Enterprise login. Custom agents go in `.claude/agents/`.
 
