@@ -39,3 +39,16 @@ Under `android-app/app/src/main/java/com/dojo/tasks/`:
 - Never add persistence, network or new dependencies unless a ticket asks for them.
 - Never push to `main` directly or merge a PR with failing CI.
 - Never paste secrets, credentials or customer data into a prompt.
+
+## Agentic workflow
+
+Work on a ticket moves through files, and Nova approves at two gates:
+
+1. `/spec <issue>`: the `analyst` subagent writes `docs/specs/<issue>.md` (acceptance criteria, edge cases, affected files).
+2. `/plan <issue>`: the `planner` subagent writes `docs/plans/<issue>.md` (files, steps, test plan, risk). **Gate G1: stop until Nova approves the plan.**
+3. `/build <issue>`: implement on branch `agent/<issue>`, have the `test-writer` subagent write tests from the plan, run the three Gradle checks, then draft the PR from `.github/pull_request_template.md`. **Gate G2: only Nova merges.**
+
+- A plan above ~400 changed lines is split into smaller tickets first.
+- Every PR links its plan file and lists what it did not do.
+- `.claude/loop.md` is the CI-fix loop for an open PR; use the `reviewer` subagent for a read-only review before marking a PR ready.
+- Hooks block edits to `.github/workflows/`, `.claude/settings.json`, `.claude/hooks/`, the Gradle wrapper, `local.properties` and keystores. Ask Nova instead of working around them.

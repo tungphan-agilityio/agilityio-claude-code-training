@@ -1,0 +1,7 @@
+# Changes to the rules agents follow need Nova's review.
+/.github/                        @tungphan-agilityio
+/.claude/                        @tungphan-agilityio
+/CLAUDE.md                       @tungphan-agilityio
+/android-app/gradle/             @tungphan-agilityio
+/android-app/**/build.gradle.kts @tungphan-agilityio
+/android-app/build.gradle.kts    @tungphan-agilityio
