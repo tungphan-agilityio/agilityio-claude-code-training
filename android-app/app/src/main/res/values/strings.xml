@@ -25,4 +25,16 @@
     <string name="error_title_required">Title is required</string>
     <string name="error_title_too_long">Title must be 80 characters or fewer</string>
     <string name="error_bad_date">Use the format yyyy-mm-dd</string>
+    <string name="log_in">Log in</string>
+    <string name="sign_up">Sign up</string>
+    <string name="log_out">Log out</string>
+    <string name="email_label">Email</string>
+    <string name="password_label">Password</string>
+    <string name="create_account">Create an account</string>
+    <string name="have_account">Already have an account? Log in</string>
+    <string name="error_email_required">Email is required</string>
+    <string name="error_email_invalid">Enter a valid email address</string>
+    <string name="error_email_taken">An account with this email already exists</string>
+    <string name="error_password_too_short">Password must be at least 8 characters</string>
+    <string name="error_bad_credentials">Email or password is incorrect</string>
 </resources>
