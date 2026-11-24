@@ -11,6 +11,10 @@ import androidx.compose.runtime.getValue
 import androidx.lifecycle.compose.collectAsStateWithLifecycle
 import androidx.lifecycle.viewmodel.compose.viewModel
 import com.dojo.tasks.data.InMemoryTaskRepository
+import com.dojo.tasks.data.InMemoryUserRepository
+import com.dojo.tasks.ui.AuthFormScreen
+import com.dojo.tasks.ui.AuthScreen
+import com.dojo.tasks.ui.AuthViewModel
 import com.dojo.tasks.ui.Screen
 import com.dojo.tasks.ui.TaskDetailScreen
 import com.dojo.tasks.ui.TaskFormScreen
@@ -32,8 +36,34 @@ class MainActivity : ComponentActivity() {
 
 @Composable
 private fun DojoTasksApp(
+    auth: AuthViewModel = viewModel { AuthViewModel(InMemoryUserRepository()) },
     vm: TasksViewModel = viewModel { TasksViewModel(InMemoryTaskRepository.withSampleData()) },
 ) {
+    val user by auth.currentUser.collectAsStateWithLifecycle()
+    // Every task screen requires a signed-in user; signed-out users only see log in / sign up.
+    if (user == null) SignedOut(auth) else SignedIn(vm, onLogOut = auth::logOut)
+}
+
+@Composable
+private fun SignedOut(auth: AuthViewModel) {
+    val screen by auth.screen.collectAsStateWithLifecycle()
+    val errors by auth.errors.collectAsStateWithLifecycle()
+
+    // Back on sign up returns to log in; back on log in is left to the system, which closes the app.
+    BackHandler(enabled = screen == AuthScreen.SignUp) { auth.back() }
+
+    AuthFormScreen(
+        mode = screen,
+        errors = errors,
+        onSubmit = { email, password ->
+            if (screen == AuthScreen.SignUp) auth.signUp(email, password) else auth.logIn(email, password)
+        },
+        onSwitchMode = { if (screen == AuthScreen.SignUp) auth.openLogin() else auth.openSignUp() },
+    )
+}
+
+@Composable
+private fun SignedIn(vm: TasksViewModel, onLogOut: () -> Unit) {
     val screen by vm.screen.collectAsStateWithLifecycle()
     val tasks by vm.tasks.collectAsStateWithLifecycle()
     val formErrors by vm.formErrors.collectAsStateWithLifecycle()
@@ -49,6 +79,7 @@ private fun DojoTasksApp(
             onOpen = vm::openDetail,
             onToggleDone = vm::toggleDone,
             onAdd = vm::openNewTask,
+            onLogOut = onLogOut,
         )
 
         is Screen.Detail -> {
