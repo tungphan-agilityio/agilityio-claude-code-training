@@ -1,7 +1,6 @@
 package com.dojo.tasks.ui.theme
 
 import org.junit.Assert.assertEquals
-import org.junit.Assert.assertFalse
 import org.junit.Assert.assertNotNull
 import org.junit.Test
 import org.w3c.dom.Document
@@ -57,8 +56,9 @@ class ThemeResourcesTest {
     // HNG-1: dark mode gets a dark window, so there is no light flash on launch.
     @Test
     fun `night theme uses a dark window`() {
-        val parent = appThemeParent("src/main/res/values-night/themes.xml")
-        assertEquals("android:Theme.Material.NoActionBar", parent)
-        assertFalse(parent!!.contains("Light"))
+        assertEquals(
+            "android:Theme.Material.NoActionBar",
+            appThemeParent("src/main/res/values-night/themes.xml"),
+        )
     }
 }
