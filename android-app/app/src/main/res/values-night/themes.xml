@@ -1,0 +1,5 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Dark window for system dark mode, so the app does not flash light on launch. -->
+    <style name="Theme.DojoTasks" parent="android:Theme.Material.NoActionBar" />
+</resources>
