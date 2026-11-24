@@ -1,0 +1,6 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Window theme drawn before Compose's first frame (and the API 31+ splash).
+         The night variant in values-night keeps it dark when the system is in dark mode. -->
+    <style name="Theme.DojoTasks" parent="android:Theme.Material.Light.NoActionBar" />
+</resources>
